@@ -67,7 +67,15 @@
   image.addEventListener('mouseenter', function() {
     if (!hasPlayed && !isYawning) {
       image.classList.add('shake-animation');
-      snoreAudio.play();
+
+      // Play snore audio with error handling
+      var snorePromise = snoreAudio.play();
+      if (snorePromise !== undefined) {
+        snorePromise.catch(function(error) {
+          console.log('Audio autoplay prevented:', error);
+        });
+      }
+
       hasPlayed = true;
       shakeCount++;
 
@@ -76,7 +84,14 @@
         isYawning = true;
         setTimeout(function() {
           image.src = 'photos/xiaohua/xiaohua_yawn.jpg';
-          yawnAudio.play();
+
+          // Play yawn audio with error handling
+          var yawnPromise = yawnAudio.play();
+          if (yawnPromise !== undefined) {
+            yawnPromise.catch(function(error) {
+              console.log('Audio autoplay prevented:', error);
+            });
+          }
         }, 600); // Wait for shake animation to finish
       }
     }
