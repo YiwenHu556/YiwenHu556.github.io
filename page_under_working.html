@@ -52,19 +52,33 @@
 <img id="xiaohua-image" src="photos/xiaohua/xiaohua1.png" alt="Xiaohua sleeping" style="max-width: 500px; width: 100%;" />
 <p style="font-size: 20px; margin-top: 20px;">Xiaohua will finish this page when she wakes up.💤</p>
 <audio id="snore-audio" src="photos/xiaohua/snore-sfx.mp3" preload="auto"></audio>
+<audio id="yawn-audio" src="photos/xiaohua/yawn.mp3" preload="auto"></audio>
 </div>
 
 <script type="text/javascript">
 (function() {
   var image = document.getElementById('xiaohua-image');
-  var audio = document.getElementById('snore-audio');
+  var snoreAudio = document.getElementById('snore-audio');
+  var yawnAudio = document.getElementById('yawn-audio');
   var hasPlayed = false;
+  var shakeCount = 0;
+  var isYawning = false;
 
   image.addEventListener('mouseenter', function() {
-    if (!hasPlayed) {
+    if (!hasPlayed && !isYawning) {
       image.classList.add('shake-animation');
-      audio.play();
+      snoreAudio.play();
       hasPlayed = true;
+      shakeCount++;
+
+      // After 5 shakes, trigger yawn
+      if (shakeCount >= 5) {
+        isYawning = true;
+        setTimeout(function() {
+          image.src = 'photos/xiaohua/xiaohua_yawn.jpg';
+          yawnAudio.play();
+        }, 600); // Wait for shake animation to finish
+      }
     }
   });
 
@@ -74,6 +88,13 @@
 
   image.addEventListener('animationend', function() {
     image.classList.remove('shake-animation');
+  });
+
+  // When yawn audio finishes, go back to sleeping image and reset
+  yawnAudio.addEventListener('ended', function() {
+    image.src = 'photos/xiaohua/xiaohua1.png';
+    shakeCount = 0;
+    isYawning = false;
   });
 })();
 </script>
