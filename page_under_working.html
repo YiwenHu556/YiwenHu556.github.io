@@ -6,6 +6,22 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link rel="stylesheet" href="mysite.css" type="text/css" />
 <title>Yiwen Hu - Page Under Construction</title>
+<style>
+@keyframes shake {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: rotate(-5deg); }
+  20%, 40%, 60%, 80% { transform: rotate(5deg); }
+}
+
+.shake-animation {
+  animation: shake 0.6s ease-in-out;
+}
+
+#xiaohua-image {
+  transition: transform 0.1s ease;
+  cursor: pointer;
+}
+</style>
 </head>
 <body>
 <div id="fwtitle">
@@ -33,9 +49,34 @@
 </div>
 
 <div style="text-align: center; margin-top: 50px;">
-<img src="photos/xiaohua/xiaohua1.png" alt="Xiaohua sleeping" style="max-width: 500px; width: 100%;" />
+<img id="xiaohua-image" src="photos/xiaohua/xiaohua1.png" alt="Xiaohua sleeping" style="max-width: 500px; width: 100%;" />
 <p style="font-size: 20px; margin-top: 20px;">Xiaohua will finish this page when she wakes up.💤</p>
+<audio id="snore-audio" src="photos/xiaohua/snore-sfx.mp3" preload="auto"></audio>
 </div>
+
+<script type="text/javascript">
+(function() {
+  var image = document.getElementById('xiaohua-image');
+  var audio = document.getElementById('snore-audio');
+  var hasPlayed = false;
+
+  image.addEventListener('mouseenter', function() {
+    if (!hasPlayed) {
+      image.classList.add('shake-animation');
+      audio.play();
+      hasPlayed = true;
+    }
+  });
+
+  image.addEventListener('mouseleave', function() {
+    hasPlayed = false;
+  });
+
+  image.addEventListener('animationend', function() {
+    image.classList.remove('shake-animation');
+  });
+})();
+</script>
 
 <div id="footer">
 <div id="footer-text">
