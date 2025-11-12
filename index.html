@@ -6,6 +6,28 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link rel="stylesheet" href="mysite.css" type="text/css" />
 <title>Yiwen Hu</title>
+<style>
+    .typed-text {
+        color: #2563eb;
+    }
+
+    .cursor {
+        display: inline-block;
+        width: 2px;
+        background-color: #333;
+        margin-left: 2px;
+        animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+        0%, 49% {
+            opacity: 1;
+        }
+        50%, 100% {
+            opacity: 0;
+        }
+    }
+</style>
 </head>
 <body>
 <div id="fwtitle">
@@ -56,7 +78,7 @@ gtag('config', 'UA-71078808-1');
 </p>
 <table class="imgtable"><tr><td>
 <img src="photos/yiwen.jpg" alt="Dr. Yiwen Hu's profile picture" width="230" />&nbsp;</td>
-<td align="left"><p><b><font size="4.8"> Yiwen Hu </font></b> 
+<td align="left"><p><b><font size="4.8"> Yiwen Hu &nbsp;&nbsp;<span class="typed-text" id="typed"></span><span class="cursor">&nbsp;</span> Researcher</font></b>
 </p>
 <p><b>Assistant Professor</b><br />
 <a href="https://www.csee.umbc.edu/"><b>Department of Computer Science and Electrical Engineering</b></a><br />
@@ -175,5 +197,50 @@ Page modified 2025-11-11, by Yiwen Hu</a>.
 </td>
 </tr>
 </table>
+<script>
+    // Words to cycle through
+    const words = ['Mobile Systems', 'V2X Communications', '5G/6G Networks', 'Network Security', 'Mobile Health'];
+
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typedElement = document.getElementById('typed');
+
+    function type() {
+        const currentWord = words[wordIndex];
+
+        if (isDeleting) {
+            // Remove character
+            typedElement.textContent = currentWord.substring(0, charIndex - 1);
+            charIndex--;
+
+            // If word is fully deleted
+            if (charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length; // Move to next word
+                setTimeout(type, 500); // Pause before typing next word
+                return;
+            }
+        } else {
+            // Add character
+            typedElement.textContent = currentWord.substring(0, charIndex + 1);
+            charIndex++;
+
+            // If word is fully typed
+            if (charIndex === currentWord.length) {
+                isDeleting = true;
+                setTimeout(type, 2000); // Pause at full word (2 seconds)
+                return;
+            }
+        }
+
+        // Typing speed
+        const typingSpeed = isDeleting ? 25 : 50;
+        setTimeout(type, typingSpeed);
+    }
+
+    // Start the typing effect
+    type();
+</script>
 </body>
 </html>
