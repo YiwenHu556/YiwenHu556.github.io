@@ -64,7 +64,7 @@
   var shakeCount = 0;
   var isYawning = false;
 
-  image.addEventListener('mouseenter', function() {
+  function triggerShake() {
     if (!hasPlayed && !isYawning) {
       image.classList.add('shake-animation');
 
@@ -95,10 +95,22 @@
         }, 600); // Wait for shake animation to finish
       }
     }
-  });
+  }
+
+  // Mouse hover support (desktop)
+  image.addEventListener('mouseenter', triggerShake);
 
   image.addEventListener('mouseleave', function() {
     hasPlayed = false;
+  });
+
+  // Click/tap support (mobile)
+  image.addEventListener('click', function() {
+    triggerShake();
+    // Reset hasPlayed after a short delay for mobile
+    setTimeout(function() {
+      hasPlayed = false;
+    }, 100);
   });
 
   image.addEventListener('animationend', function() {
