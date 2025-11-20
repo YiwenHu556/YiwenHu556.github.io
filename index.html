@@ -4,8 +4,8 @@
 <head>
 <meta name="generator" content="Yiwen Hu" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<link rel="stylesheet" href="mysite.css" type="text/css" />
-<link rel="icon" type="image/png" href="favicon.png?v=2" />
+<link rel="stylesheet" href="assets/mysite.css" type="text/css" />
+<link rel="icon" type="image/png" href="assets/favicon.png?v=2" />
 <title>Yiwen Hu</title>
 <style>
     .typed-text {
@@ -102,6 +102,33 @@ If interested, please send me an email with your CV, transcript, and a brief des
 <h2>Biography </h2>
 <p>Dr. Yiwen Hu is an Assistant Professor in the <a href="https://www.csee.umbc.edu/">Department of Computer Science and Electrical Engineering</a> at <a href="https://www.umbc.edu/">University of Maryland, Baltimore County (UMBC)</a>, where she joined in Fall 2025. She earned her Ph.D. from the Department of Computer Science and Engineering at Michigan State University, where she was advised by Professor <a href="https://www.cse.msu.edu/~ghtu/" style="color: blue;">Guan-Hua Tu</a> and Professor <a href="https://engineering.msu.edu/faculty/Li-Xiao" style="color: blue;">Li Xiao</a>. Prior to that, she received her B.S. degree from Zhejiang University in 2018.
 Her research interests lie broadly in <b>security</b>, <b>mobile networks and systems</b>, <b>IoT</b>, <b>formal methods</b>, and <b>vehicle-to-everything (V2X)</b>, with a recent focus on <b>securing and innovating 5G and next-generation mobile network protocols and technologies.</b></p>
+<h2>Recent News</h2>
+<div id="news-placeholder"></div>
+<script>
+fetch('news.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('news-placeholder').innerHTML = data;
+
+    // Initialize the toggle functionality after content is loaded
+    var toggleLink = document.getElementById('toggle-news');
+    var extraNews = document.querySelectorAll('.extra-news');
+    var isExpanded = false;
+    var hiddenCount = extraNews.length;
+
+    if (toggleLink) {
+      toggleLink.addEventListener('click', function() {
+        isExpanded = !isExpanded;
+
+        extraNews.forEach(function(item) {
+          item.style.display = isExpanded ? 'list-item' : 'none';
+        });
+
+        toggleLink.textContent = isExpanded ? '▲ Show less' : '▼ Show all news (' + hiddenCount + ' more)';
+      });
+    }
+  });
+</script>
 <h2>Honors and Awards</h2>
 <ul>
 <li><p>MSU CSE Recognition for Outstanding Research <span style="float: right; margin-right: 16px;">2025</span></p>
@@ -155,51 +182,6 @@ Proceedings of ACM the 28th Annual International Conference On Mobile Computing 
 Proceedings of the 11th ACM Conference on Data and Application Security and Privacy (CODASPY) 2021, April 26-28, 2021, taking place virtually, pp. 89-100 (Acceptance Rate: 29%).<br />
 <a href="papers/Hu-Codaspy21.pdf"><button class="btn btn--pdf">PDF</button></a>
 <a href="https://dl.acm.org/doi/abs/10.1145/3422337.3447832"><button class="btn btn--acm">ACM</button></a></p>
-<h2>Recent News</h2>
-<ul>
-<li><p>[July 2025] I was invited to serve on IEEE DSC'25 TPC.</p>
-</li>
-<li><p>[May 2025] I received the 2025 MSU CSE Recognition for Outstanding Research.</p>
-</li>
-<li><p>[March 2025] I was invited to serve on IEEE CNS'25 TPC. Please consider submitting.</p>
-</li>
-<li><p>[March 2025] I was invited to serve as Publicity Co-chair of IEEE DSC 2025. Please consider submitting.</p>
-</li>
-<li><p>[March 2025] Our research on emergency services (911) reliability was featured by MSU Today.</p>
-</li>
-<li><p>[March 2025] Our IMS security paper was selected as a Research Highlight by ACM GetMobile.</p>
-</li>
-<li><p>[Aug. 2024] Our emergency service (9-1-1) paper was accepted by ACM MobiCom'24.</p>
-</li>
-<li><p>[July 2024] Our MobiCom '22 paper, 'Uncovering Insecure Designs of Cellular Emergency Services (911),' was selected for the SIGMOBILE Research Highlights.</p>
-</li>
-<li><p>[May 2024] Our reported security vulnerabilities and proposed solutions from the 911 security project prompted a revision to a member-only GSMA document, titled 'VoLTE Security Analysis and Recommendations.'</p>
-</li>
-<li><p>[May 2024] Our 911 security paper, titled 'Taming the Insecurity of Cellular Emergency Services (9-1-1): From Vulnerabilities to Secure Designs,' was accepted by IEEE/ACM Transactions on Networking.</p>
-</li>
-<li><p>[Nov. 2023] Our 5G/4G IMS security paper was conditionally accepted by ACM MobiCom'24.</p>
-</li>
-<li><p>[Aug. 2023] Our cellular IoT security paper was accepted by IEEE/ACM Transactions on Networking.</p>
-</li>
-<li><p>[Apr. 2023] I received the 2023 MSU Graduate Office Fellowship (GOF).</p>
-</li>
-<li><p>[Jan. 2023] Our 911 security project recevied the Security Reward from AT&T.</p>
-</li>
-<li><p>[Dec. 2022] Our 911 security paper was selected for ACM GetMobile Research Highlights.</p>
-</li>
-<li><p>[Oct. 2022] Our 911 security paper received the Best Community Paper Award Runner-Up at ACM MobiCom'22; the Best Community Paper Award is considered to contribute the most to the broader research community by making public real data, software, platform, or other artifacts.</p>
-</li>
-<li><p>[Aug. 2022] Our cellular emergency service (9-1-1) security paper was accepted by ACM MobiCom'22.</p>
-</li>
-<li><p>[Apr. 2022] I received the Carl V. Page Graduate Fellowship.</p>
-</li>
-<li><p>[Apr. 2022] I received Mobicom'21/SIGMOBILE Travel Grants.</p>
-</li>
-<li><p>[Aug. 2021] Our cellular IoT security paper was accepted by ACM MobiCom'21.</p>
-</li>
-<li><p>[Dec. 2020] Our Blockchain security paper was accepted by ACM CodaSpy'21.</p>
-</li>
-</ul>
 <div id="footer">
 <div id="footer-text">
 Page modified 2025-11-20, by Yiwen Hu</a>.
