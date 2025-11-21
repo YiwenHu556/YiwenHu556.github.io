@@ -28,6 +28,69 @@
             opacity: 0;
         }
     }
+
+    /* Publication entry styles */
+    .publication-entry {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+      margin-bottom: 20px;
+    }
+    .publication-entry:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+    .publication-image {
+      flex-shrink: 0;
+      width: 300px;
+      min-height: 200px;
+      padding: 4px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+    .publication-image #pub-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      min-height: 192px;
+      color: #666;
+      font-size: 14px;
+      background-color: #e0e0e0;
+      border-radius: 2px;
+    }
+    .publication-image img {
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .publication-details {
+      flex: 1;
+      min-width: 0;
+    }
+    @media (max-width: 768px) {
+      .publication-entry {
+        flex-direction: column;
+      }
+      .publication-image {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 16px;
+      }
+    }
 </style>
 </head>
 <body>
@@ -157,31 +220,130 @@ fetch('news.html')
 </li>
 </ul>
 <h2>Selected Publications</h2>
-<p><i><span class="btn btn--primary">MobiCom'24</span> <b>Uncovering Problematic Designs Hindering Ubiquitous Cellular Emergency Services Access</b></i><br /> 
-<span style="background-color: white; color: black; font-weight: bold;"><u>Yiwen Hu</u></span>, Min-Yue Chen, Haitian Yan, Chuan-Yi Cheng, Guan-Hua Tu, Chi-Yu Li, Tian Xie, Chunyi Peng, Li Xiao, <br /> and Jiliang Tang
-<br />Proceedings of ACM the 30th Annual International Conference On Mobile Computing And Networking (MobiCom) 2024, September 30- October 4, 2024, Washington, D.C., USA (Acceptance rate: 55/288 = 19.09%, Winter run).
-<br />
-<br />
-<i><span class="btn btn--primary">ToN'24</span> <b>Taming the Insecurity of Cellular Emergency Services (9-1-1): From Vulnerabilities to Secure Designs</b></i><br />
-Min-Yue Chen†, <span style="background-color: white; color: black; font-weight: bold;"><u>Yiwen Hu</u></span>†(†: co-primary), Guan-Hua Tu, Chi-Yu Li, Sihan Wang, Jingwen Shi, Tian Xie, Li Xiao, Chunyi Peng, Zhaowei Tan, and Songwu Lu<br />
-Accepted by IEEE/ACM Transactions on Networking (Impact Factor: 3.56). <br />
-<a href="https://ieeexplore.ieee.org/abstract/document/10479537">
-    <button class="btn btn--ieee">IEEE</button></a>
-<br />
-<br />
-<i><span class="btn btn--primary">MobiCom'22</span> <b>Uncovering Insecure Designs of Cellular Emergency Services (911)</b></i><br /> 
-<span style="background-color: white; color: black; font-weight: bold;"><u>Yiwen Hu</u></span>, Min-Yue Chen, Guan-Hua Tu, Chi-Yu Li, Sihan Wang, Jingwen Shi, Tian Xie, Xiao Li, Chunyi Peng, Zhaowei Tan, Songwu Lu<br />
-Proceedings of ACM the 28th Annual International Conference On Mobile Computing And Networking (MobiCom) 2022, October 17- October 21, 2022, Sydney, Australia (Acceptance Rate: 18.1%). <br />
-<b><font color="darkred">Best Community Paper Award Runner-Up, SIGMOBILE Research Highlight, GetMobile Research Highlight, AT&T Security Award</font></b><br />
-<a href="papers/2022mobicom911.pdf"><button class="btn btn--pdf">PDF</button></a>
-<a href="https://dl.acm.org/doi/abs/10.1145/3495243.3560534"><button class="btn btn--acm">ACM</button></a>
-<br />
-<br />
-<i><span class="btn btn--primary">CodaSpy'21</span> <b>Security Threats from Bitcoin Wallet Smartphone Applications: Vulnerabilities, Attacks, and Countermeasures</b></i><br />
-<span style="background-color: white; color: black; font-weight: bold;"><u>Yiwen Hu</u></span>, Sihan Wang, Guan-Hua Tu, Li Xiao, Tian Xie, Xinyu Lei, Chi-Yu Li<br /> 
-Proceedings of the 11th ACM Conference on Data and Application Security and Privacy (CODASPY) 2021, April 26-28, 2021, taking place virtually, pp. 89-100 (Acceptance Rate: 29%).<br />
-<a href="papers/Hu-Codaspy21.pdf"><button class="btn btn--pdf">PDF</button></a>
-<a href="https://dl.acm.org/doi/abs/10.1145/3422337.3447832"><button class="btn btn--acm">ACM</button></a></p>
+<div id="selected-publications-container">
+  Loading publications...
+</div>
+<script>
+(function() {
+  fetch('publications/publications.json')
+    .then(response => response.json())
+    .then(data => {
+      const styles = data.styles;
+      const selectedPubs = data.publications.filter(pub => pub.selected === true);
+
+      let html = '';
+
+      selectedPubs.forEach(function(pub, index) {
+        var hasImage = pub.image && pub.image.trim() !== '';
+
+        html += '<div class="publication-entry">';
+
+        // Image section (only if image path exists)
+        if (hasImage) {
+          html += '<div class="publication-image" id="pub-image-container-' + index + '">';
+          html += '<span class="pub-placeholder">Loading...</span>';
+          html += '<img class="pub-image" src="" alt="' + pub.title + '" style="display: none;" data-src="' + pub.image + '" data-index="' + index + '" />';
+          html += '</div>';
+        }
+
+        // Details section
+        html += '<div class="publication-details">';
+        html += '<p><i>';
+
+        // Conference badge
+        html += '<span style="display: inline-block; ';
+        html += 'background-color: ' + styles.conference.backgroundColor + '; ';
+        html += 'color: ' + styles.conference.textColor + '; ';
+        html += 'font-size: ' + styles.conference.fontSize + '; ';
+        html += 'padding: ' + styles.conference.padding + '; ';
+        html += 'border-radius: ' + styles.conference.borderRadius + '; ';
+        html += 'font-weight: bold;">';
+        html += pub.conference;
+        html += '</span> ';
+
+        // Title
+        html += '<b style="color: ' + styles.title.color + '; ';
+        html += 'font-weight: ' + styles.title.fontWeight + ';">';
+        html += pub.title;
+        html += '</b></i><br />';
+
+        // Authors
+        html += pub.authors;
+        html += '<br />';
+
+        // Details
+        html += pub.details;
+        html += '<br />';
+
+        // Notes (if present)
+        if (pub.notes && pub.notes.trim() !== '') {
+          html += '<b style="color: ' + styles.notes.color + '; ';
+          html += 'font-weight: ' + styles.notes.fontWeight + ';">';
+          html += pub.notes;
+          html += '</b><br />';
+        }
+
+        // Buttons
+        if (pub.buttons && pub.buttons.length > 0) {
+          pub.buttons.forEach(function(btn) {
+            const buttonStyle = styles.buttons[btn.name] || {};
+            html += '<a href="' + btn.link + '">';
+            html += '<button style="display: inline-block; ';
+            html += 'margin-bottom: 0.25em; ';
+            html += 'margin-right: 0.5em; ';
+            html += 'padding: ' + styles.buttonDefaults.padding + '; ';
+            html += 'font-size: ' + styles.buttonDefaults.fontSize + '; ';
+            html += 'border-radius: ' + styles.buttonDefaults.borderRadius + '; ';
+            html += 'font-weight: ' + styles.buttonDefaults.fontWeight + '; ';
+            html += 'background-color: ' + (buttonStyle.backgroundColor || '#7a8288') + '; ';
+            html += 'color: ' + (buttonStyle.textColor || 'white') + ' !important; ';
+            html += 'border: 0; ';
+            html += 'cursor: pointer; ';
+            html += 'text-align: center; ';
+            html += 'font-family: Georgia;">';
+            html += btn.name;
+            html += '</button></a>';
+          });
+        }
+
+        html += '</p>';
+        html += '</div>'; // Close publication-details
+        html += '</div>'; // Close publication-entry
+      });
+
+      document.getElementById('selected-publications-container').innerHTML = html;
+
+      // Load images after DOM is updated
+      selectedPubs.forEach(function(pub, index) {
+        if (pub.image && pub.image.trim() !== '') {
+          var imgElement = document.querySelector('.pub-image[data-index="' + index + '"]');
+          var imageContainer = document.getElementById('pub-image-container-' + index);
+
+          if (imgElement && imageContainer) {
+            var placeholderElement = imageContainer.querySelector('.pub-placeholder');
+
+            imgElement.onload = function() {
+              imgElement.style.display = 'block';
+              if (placeholderElement) placeholderElement.style.display = 'none';
+            };
+
+            imgElement.onerror = function() {
+              if (imageContainer && imageContainer.parentNode) {
+                imageContainer.parentNode.removeChild(imageContainer);
+              }
+            };
+
+            imgElement.src = imgElement.getAttribute('data-src');
+          }
+        }
+      });
+    })
+    .catch(error => {
+      document.getElementById('selected-publications-container').innerHTML =
+        '<p style="color: red;">Error loading publications: ' + error.message + '</p>';
+    });
+})();
+</script>
 <div id="footer">
 <div id="footer-text">
 Page modified 2025-11-20, by Yiwen Hu</a>.

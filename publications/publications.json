@@ -1,0 +1,246 @@
+{
+  "styles": {
+    "image": {
+      "comment": "Optional field for publication preview images",
+      "recommendedSize": "300x200 (landscape, 3:2 ratio)",
+      "desktopLayout": "image on left, content on right",
+      "mobileLayout": "image on top, content below"
+    },
+    "conference": {
+      "backgroundColor": "#398866",
+      "textColor": "white",
+      "fontSize": "0.75em",
+      "padding": "0.1em 0.2em",
+      "borderRadius": "4px"
+    },
+    "title": {
+      "color": "black",
+      "fontWeight": "bold"
+    },
+    "notes": {
+      "color": "darkred",
+      "fontWeight": "bold"
+    },
+    "buttons": {
+      "PDF": {
+        "backgroundColor": "#74afe0",
+        "textColor": "white"
+      },
+      "IEEE": {
+        "backgroundColor": "#557692",
+        "textColor": "white"
+      },
+      "ACM": {
+        "backgroundColor": "#6dadbd",
+        "textColor": "white"
+      },
+      "arXiv": {
+        "backgroundColor": "#b31b1b",
+        "textColor": "white"
+      },
+      "News": {
+        "backgroundColor": "#428aa0",
+        "textColor": "white"
+      }
+    },
+    "buttonDefaults": {
+      "fontSize": "0.75em",
+      "padding": "0.1em 1em",
+      "borderRadius": "4px",
+      "fontWeight": "bold"
+    }
+  },
+  "publications": [
+    {
+      "year": "2024",
+      "conference": "MobiCom'24",
+      "title": "Uncovering Problematic Designs Hindering Ubiquitous Cellular Emergency Services Access",
+      "image": "publications/images/mobicom24-emergency-services.jpg",
+      "selected": true,
+      "authors": "<span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Min-Yue Chen, Haitian Yan, Chuan-Yi Cheng, Guan-Hua Tu, Chi-Yu Li, Tian Xie, Chunyi Peng, Li Xiao, and Jiliang Tang",
+      "details": "Proceedings of ACM the 30th Annual International Conference On Mobile Computing And Networking (MobiCom) 2024, September 30- October 4, 2024, Washington, D.C., USA (Acceptance rate: 55/288 = 19.09%, Winter run).",
+      "notes": "",
+      "buttons": []
+    },
+    {
+      "year": "2024",
+      "conference": "MobiCom'24",
+      "title": "IMS is Not That Secure on Your 5G/4G Phones",
+      "image": "publications/images/mobicom24-ims-security.jpg",
+      "authors": "Jingwen Shi, Sihan Wang, Min-Yue Chen, Guan-Hua Tu, Tian Xie, Man-Hsin Chen, <span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Chi-Yu Li, Chunyi Peng",
+      "details": "Proceedings of ACM the 30th Annual International Conference On Mobile Computing And Networking (MobiCom) 2024, September 30 - October 4, 2024, Washington, D.C., USA (Acceptance rate: 48/207 = 23.19%, Summer Run).",
+      "notes": "",
+      "buttons": [
+        {
+          "name": "ACM",
+          "link": "https://dl.acm.org/doi/abs/10.1145/3636534.3649377"
+        }
+      ]
+    },
+    {
+      "year": "2024",
+      "conference": "ToN'24",
+      "title": "Taming the Insecurity of Cellular Emergency Services (9-1-1): From Vulnerabilities to Secure Designs",
+      "image": "publications/images/ton24-911-security.jpg",
+      "selected": true,
+      "authors": "Min-Yue Chen†, <span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>†(†: co-primary), Guan-Hua Tu, Chi-Yu Li, Sihan Wang, Jingwen Shi, Tian Xie, Li Xiao, Chunyi Peng, Zhaowei Tan, and Songwu Lu",
+      "details": "Accepted by IEEE/ACM Transactions on Networking (Impact Factor: 3.56).",
+      "notes": "",
+      "buttons": [
+        {
+          "name": "IEEE",
+          "link": "https://ieeexplore.ieee.org/abstract/document/10479537"
+        }
+      ]
+    },
+    {
+      "year": "2024",
+      "conference": "TOSN'24",
+      "title": "On the Inference of Original Graph Information from Graph Embeddings",
+      "image": "publications/images/tosn24-graph-embeddings.jpg",
+      "authors": "Yantao Li, Xinyang Li, Xinyu Lei, Huafeng Qin, <span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Gang Zhou",
+      "details": "Accepted by ACM Transactions on Sensor Networks (Impact Factor: 3.9).",
+      "notes": "",
+      "buttons": [
+        {
+          "name": "ACM",
+          "link": "https://dl.acm.org/doi/abs/10.1145/3688846"
+        }
+      ]
+    },
+    {
+      "year": "2023",
+      "conference": "ToN'23",
+      "title": "Dissecting Operational Cellular IoT Service Security: Attacks and Defenses",
+      "image": "publications/images/ton23-iot-security.jpg",
+      "authors": "Sihan Wang, Tian Xie, Min-Yue Chen, Guan-Hua Tu, Chi-Yu Li, Xinyu Lei, Po-Yi Chou, Fucheng Hsieh, <span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Li Xiao, and Chunyi Peng",
+      "details": "Accepted by IEEE/ACM Transactions on Networking (Impact Factor: 3.7).",
+      "notes": "",
+      "buttons": [
+        {
+          "name": "IEEE",
+          "link": "https://ieeexplore.ieee.org/abstract/document/10255644"
+        }
+      ]
+    },
+    {
+      "year": "2023",
+      "conference": "CNS'23",
+      "title": "When Good Turns Evil: Encrypted 5G/4G Voice Calls Can Leak Your Identities",
+      "image": "publications/images/cns23-voice-privacy.jpg",
+      "authors": "Jingwen Shi, Tian Xie, Guan-Hua Tu, Chunyi Peng, Chi-Yu Li, Andrew Hou, Sihan Wang, <span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Xinyu Lei, Min-Yue Chen, Li Xiao, and Xiaoming Liu",
+      "details": "Accepted by IEEE Conference on Communications and Network Security (IEEE CNS) 2023, October 2- October 5, 2023, Orlando, Florida (Acceptance Rate: 28.5%).",
+      "notes": "",
+      "buttons": [
+        {
+          "name": "IEEE",
+          "link": "https://ieeexplore.ieee.org/abstract/document/10288900"
+        }
+      ]
+    },
+    {
+      "year": "2023",
+      "conference": "GetMobile'23",
+      "title": "Unveiling the Insecurity of Operational Cellular Emergency Services (911): Vulnerabilities, Attacks, and Countermeasures",
+      "image": "publications/images/getmobile23-911-vulnerabilities.jpg",
+      "authors": "<span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Min-Yue Chen, Guan-Hua Tu, Chi-Yu Li, Sihan Wang, Jingwen Shi, Tian Xie, Li Xiao, Chunyi Peng, Zhaowei Tan, Songwu Lu",
+      "details": "An invited paper to ACM GetMobile: Mobile Computing and Communications, Volume: 27, Issue: 1, pp. 39-43, March, 2023.",
+      "notes": "GetMobile Research Highlights",
+      "buttons": [
+        {
+          "name": "ACM",
+          "link": "https://dl.acm.org/doi/abs/10.1145/3599184.3599195"
+        }
+      ]
+    },
+    {
+      "year": "2023",
+      "conference": "CSUR'23",
+      "title": "The security in optical wireless communication: A survey",
+      "image": "publications/images/csur23-optical-wireless.jpg",
+      "authors": "Xiao Zhang, Griffin Klevering, Xinyu Lei, <span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Li Xiao, Guan-Hua Tu",
+      "details": "Accepted by ACM Computing Surveys (Impact Factor: 23.8).",
+      "notes": "",
+      "buttons": [
+        {
+          "name": "ACM",
+          "link": "https://dl.acm.org/doi/full/10.1145/3594718"
+        }
+      ]
+    },
+    {
+      "year": "2023",
+      "conference": "IJCNN'23",
+      "title": "Towards Inference of Original Graph Data Information from Graph Embeddings",
+      "image": "publications/images/ijcnn23-graph-inference.jpg",
+      "authors": "Xinyang Li, Xinyu Lei, Yantao Li, Huafeng Qin, <span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>",
+      "details": "Proceedings of IEEE 2023 International Joint Conference on Neural Networks (IJCNN), Gold Coast, Australia, 18-23 June 2023, pp. 1-10.",
+      "notes": "",
+      "buttons": [
+        {
+          "name": "IEEE",
+          "link": "https://ieeexplore.ieee.org/abstract/document/10191065"
+        }
+      ]
+    },
+    {
+      "year": "2022",
+      "conference": "MobiCom'22",
+      "title": "Uncovering Insecure Designs of Cellular Emergency Services (911)",
+      "image": "publications/images/mobicom22-911-security.jpg",
+      "selected": true,
+      "authors": "<span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Min-Yue Chen, Guan-Hua Tu, Chi-Yu Li, Sihan Wang, Jingwen Shi, Tian Xie, Li Xiao, Chunyi Peng, Zhaowei Tan, Songwu Lu",
+      "details": "Proceedings of ACM the 28th Annual International Conference On Mobile Computing And Networking (MobiCom) 2022, October 17- October 21, 2022, Sydney, Australia (Acceptance Rate: 18.1%).",
+      "notes": "Best Community Paper Award Runner-Up, SIGMOBILE Research Highlight, GetMobile Research Highlight, AT&T Security Award",
+      "buttons": [
+        {
+          "name": "PDF",
+          "link": "papers/2022mobicom911.pdf"
+        },
+        {
+          "name": "ACM",
+          "link": "https://dl.acm.org/doi/abs/10.1145/3495243.3560534"
+        }
+      ]
+    },
+    {
+      "year": "2021",
+      "conference": "CodaSpy'21",
+      "title": "Security Threats from Bitcoin Wallet Smartphone Applications: Vulnerabilities, Attacks, and Countermeasures",
+      "image": "publications/images/codaspy21-bitcoin-wallet.jpg",
+      "selected": true,
+      "authors": "<span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Sihan Wang, Guan-Hua Tu, Li Xiao, Tian Xie, Xinyu Lei, Chi-Yu Li",
+      "details": "Proceedings of the 11th ACM Conference on Data and Application Security and Privacy (CODASPY) 2021, April 26-28, 2021, taking place virtually, pp. 89-100 (Acceptance Rate: 29%).",
+      "notes": "",
+      "buttons": [
+        {
+          "name": "PDF",
+          "link": "papers/Hu-Codaspy21.pdf"
+        },
+        {
+          "name": "ACM",
+          "link": "https://dl.acm.org/doi/abs/10.1145/3422337.3447832"
+        }
+      ]
+    },
+    {
+      "year": "2021",
+      "conference": "MobiCom'21",
+      "title": "Insecurity of Operational Cellular IoT Service: New Vulnerabilities, Attacks, and Countermeasures",
+      "image": "publications/images/mobicom21-cellular-iot.jpg",
+      "authors": "Sihan Wang, Guan-Hua Tu, Xinyu Lei, Tian Xie, Chi-Yu Li, Po-Yi Chou, Fucheng Hsieh, <span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Li Xiao, Chunyi Peng",
+      "details": "Proceedings of ACM the 27th Annual International Conference On Mobile Computing And Networking (ACM MobiCom) 2021, March 28 - April 1, 2022, New Orleans, United States, pp. 437-450 (Acceptance Rate: 19.9%).",
+      "notes": "",
+      "buttons": [
+        {
+          "name": "PDF",
+          "link": "papers/Wang-Mobicom21.pdf"
+        },
+        {
+          "name": "ACM",
+          "link": "https://dl.acm.org/doi/abs/10.1145/3447993.3483239"
+        }
+      ]
+    }
+  ]
+}

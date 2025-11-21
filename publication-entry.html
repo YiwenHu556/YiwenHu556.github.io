@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta name="generator" content="Yiwen Hu" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="assets/mysite.css" type="text/css" />
+<link rel="icon" type="image/png" href="assets/favicon.png?v=2" />
+<title>Publication Template</title>
+<style>
+  body {
+    padding: 20px;
+  }
+  #publication-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+  }
+  .publication-entry {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  .publication-entry:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+  .publication-image {
+    flex-shrink: 0;
+    width: 300px;
+    min-height: 200px;
+    padding: 4px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .publication-image #pub-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 192px;
+    color: #666;
+    font-size: 14px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+  }
+  .publication-image img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .publication-details {
+    flex: 1;
+    min-width: 0;
+  }
+  /* Mobile responsive: stack vertically */
+  @media (max-width: 768px) {
+    .publication-entry {
+      flex-direction: column;
+    }
+    .publication-image {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="publication-container">
+  <h2>Random Publication Preview</h2>
+  <div id="publication-content">
+    Loading...
+  </div>
+</div>
+
+<script>
+(function() {
+  fetch('publications/publications.json')
+    .then(response => response.json())
+    .then(data => {
+      const styles = data.styles;
+      const publications = data.publications;
+
+      // Select a random publication
+      const randomPub = publications[Math.floor(Math.random() * publications.length)];
+
+      // Build the HTML with image and content layout
+      let html = '<div class="publication-entry">';
+
+      // Image section (only if image path exists)
+      var hasImage = randomPub.image && randomPub.image.trim() !== '';
+      if (hasImage) {
+        html += '<div class="publication-image" id="pub-image-container">';
+        html += '<span id="pub-placeholder">Image Placeholder<br/>300×200</span>';
+        html += '<img id="pub-image" src="" alt="' + randomPub.title + '" style="display: none;" />';
+        html += '</div>';
+      }
+
+      // Details section
+      html += '<div class="publication-details">';
+      html += '<p><i>';
+
+      // Conference badge with styling
+      html += '<span style="display: inline-block; ';
+      html += 'background-color: ' + styles.conference.backgroundColor + '; ';
+      html += 'color: ' + styles.conference.textColor + '; ';
+      html += 'font-size: ' + styles.conference.fontSize + '; ';
+      html += 'padding: ' + styles.conference.padding + '; ';
+      html += 'border-radius: ' + styles.conference.borderRadius + '; ';
+      html += 'font-weight: bold;">';
+      html += randomPub.conference;
+      html += '</span> ';
+
+      // Title with styling
+      html += '<b style="color: ' + styles.title.color + '; ';
+      html += 'font-weight: ' + styles.title.fontWeight + ';">';
+      html += randomPub.title;
+      html += '</b></i><br />';
+
+      // Authors
+      html += randomPub.authors;
+      html += '<br />';
+
+      // Details
+      html += randomPub.details;
+      html += '<br />';
+
+      // Notes (if present)
+      if (randomPub.notes && randomPub.notes.trim() !== '') {
+        html += '<b style="color: ' + styles.notes.color + '; ';
+        html += 'font-weight: ' + styles.notes.fontWeight + ';">';
+        html += randomPub.notes;
+        html += '</b><br />';
+      }
+
+      // Buttons
+      if (randomPub.buttons && randomPub.buttons.length > 0) {
+        randomPub.buttons.forEach(function(btn) {
+          const buttonStyle = styles.buttons[btn.name] || {};
+          html += '<a href="' + btn.link + '">';
+          html += '<button style="display: inline-block; ';
+          html += 'margin-bottom: 0.25em; ';
+          html += 'margin-right: 0.5em; ';
+          html += 'padding: ' + styles.buttonDefaults.padding + '; ';
+          html += 'font-size: ' + styles.buttonDefaults.fontSize + '; ';
+          html += 'border-radius: ' + styles.buttonDefaults.borderRadius + '; ';
+          html += 'font-weight: ' + styles.buttonDefaults.fontWeight + '; ';
+          html += 'background-color: ' + (buttonStyle.backgroundColor || '#7a8288') + '; ';
+          html += 'color: ' + (buttonStyle.textColor || 'white') + ' !important; ';
+          html += 'border: 0; ';
+          html += 'cursor: pointer; ';
+          html += 'text-align: center; ';
+          html += 'font-family: Georgia;">';
+          html += btn.name;
+          html += '</button></a>';
+        });
+      }
+
+      html += '</p>';
+      html += '</div>'; // Close publication-details
+      html += '</div>'; // Close publication-entry
+
+      document.getElementById('publication-content').innerHTML = html;
+
+      // Handle image loading with fallback (only if image path exists)
+      if (hasImage) {
+        var imgElement = document.getElementById('pub-image');
+        var placeholderElement = document.getElementById('pub-placeholder');
+        var imageContainer = document.getElementById('pub-image-container');
+
+        imgElement.onload = function() {
+          // Image loaded successfully - show image, hide placeholder
+          imgElement.style.display = 'block';
+          placeholderElement.style.display = 'none';
+        };
+
+        imgElement.onerror = function() {
+          // Image file doesn't exist - remove entire image container
+          if (imageContainer && imageContainer.parentNode) {
+            imageContainer.parentNode.removeChild(imageContainer);
+          }
+        };
+
+        // Start loading the image
+        imgElement.src = randomPub.image;
+      }
+    })
+    .catch(error => {
+      document.getElementById('publication-content').innerHTML =
+        '<p style="color: red;">Error loading publications: ' + error.message + '</p>';
+    });
+})();
+</script>
+</body>
+</html>
