@@ -195,7 +195,7 @@
       "buttons": [
         {
           "name": "PDF",
-          "link": "papers/2022mobicom911.pdf"
+          "link": "papers/mobicom22-911-security.pdf"
         },
         {
           "name": "ACM",
@@ -215,7 +215,7 @@
       "buttons": [
         {
           "name": "PDF",
-          "link": "papers/Hu-Codaspy21.pdf"
+          "link": "papers/codaspy21-bitcoin-wallet.pdf"
         },
         {
           "name": "ACM",
@@ -234,7 +234,7 @@
       "buttons": [
         {
           "name": "PDF",
-          "link": "papers/Wang-Mobicom21.pdf"
+          "link": "papers/mobicom21-cellular-iot.pdf"
         },
         {
           "name": "ACM",
