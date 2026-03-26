@@ -20,9 +20,6 @@
 
 #layout-content {
     width: 100%;
-    max-width: 1100px;       /* Cap content width for readability */
-    margin-left: auto;
-    margin-right: auto;
     padding: 1em;            /* Top/bottom and a little horizontal */
     background: white;
     text-align: left;
@@ -33,7 +30,7 @@
 
 table#tlayout {
     width: 100%;
-    max-width: 1200px;         /* Total width including menu + content */
+    max-width: 1800px;
     margin-left: auto;
     margin-right: auto;
     border: none;
@@ -42,7 +39,7 @@ table#tlayout {
 }
 
 body {
-	background: #18453B;
+	background: #00274C;
 	font-family: Georgia;
 	/*font-size: 18px;  ? Add this line */ 
 	padding-bottom: 8px;
@@ -56,7 +53,7 @@ body {
 	padding-left: 8px;
 	padding-right: 8px;
 	font-size: 16px;
-	width: 17.5%;
+	width: 18%;
 	white-space: nowrap;
     text-align: left;
     vertical-align: top;
