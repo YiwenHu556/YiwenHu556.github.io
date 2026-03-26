@@ -12,7 +12,7 @@
     .ticker-label {
         background: none;
         color: #333;
-        font-family: Georgia;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         font-weight: bold;
         font-size: 16px;
         padding: 10px 16px;
@@ -28,7 +28,7 @@
     .ticker-content {
         display: inline-block;
         white-space: nowrap;
-        font-family: Georgia;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         font-size: 16px;
         font-weight: bold;
         color: #2563eb;
@@ -75,7 +75,7 @@
     (function() {
         var interests = ['Mobile Systems', 'V2X Communications', '5G/6G Networks', 'Network Security', 'Mobile Health'];
         var sep = ' <span class="ticker-separator">|</span> ';
-        var matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZアイウエオカキクケコサシスセソタチツテト0123456789@#$%&';
+        var matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*+=<>~';
 
         function buildSet() {
             return interests.map(function(item) {

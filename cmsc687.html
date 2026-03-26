@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta name="generator" content="Yiwen Hu" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="assets/mysite.css" type="text/css" />
+<link rel="icon" type="image/png" href="assets/favicon.png?v=2" />
+<title>Yiwen Hu - CMSC 687/487</title>
+</head>
+<body>
+<div id="fwtitle">
+</div>
+<table summary="Table for page layout." id="tlayout">
+<tr valign="top">
+<td id="layout-menu">
+<div id="sidebar-placeholder"></div>
+<script>
+fetch('sidebar.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('sidebar-placeholder').innerHTML = data;
+    var links = document.querySelectorAll('#layout-menu a[href="cmsc687.html"]');
+    if (links.length > 0) links[0].classList.add('current');
+  });
+</script>
+</td>
+<td id="layout-content">
+<div id="toptitle">
+<h1>CMSC 687/487: Introduction to Network Security</h1>
+</div>
+
+<h2>Course Information</h2>
+<p><b>Semester:</b> Spring 2026<br />
+<b>Instructor:</b> Dr. Yiwen Hu (huyiwen@umbc.edu)<br />
+<b>TA:</b> Bojing Li (ji18978@umbc.edu)</p>
+
+<p><b>Lectures:</b> Monday and Wednesday 2:30 PM - 3:45 PM<br />
+<b>Location:</b> Janet &amp; Walter Sondheim 409</p>
+
+<p><b>Prerequisites:</b><br />
+Undergraduate: CMSC 421 or CMSC 481 (grade of C or better)<br />
+Graduate: CMSC 341 and CMSC 481</p>
+
+<p><b>Office Hours:</b><br />
+Instructor: Monday 3:45 - 4:45 PM (ITE 322-A, or by appointment)<br />
+TA: TBD</p>
+
+<h2>Course Description</h2>
+<p>This course covers fundamental concepts, principles, and practical techniques for securing computer networks. It examines both traditional and emerging threats, along with defense mechanisms deployed at Internet scale. Major topics include Internet protocol security, web security, mobile malware analysis, network monitoring and anomaly detection, cryptography fundamentals, cloud security, and advanced topics such as 5G and satellite network security. Students will gain hands-on experience with security tools and techniques, develop practical skills through applied exercises, and be inspired to pursue advanced projects and research in network security.</p>
+
+<h2>Grading</h2>
+<ul>
+<li>Midterm Exam: 15%</li>
+<li>Final Exam: 20%</li>
+<li>Homework Assignments: 21%</li>
+<li>Course Project: 40%</li>
+<li>In-class Quizzes: 4%</li>
+</ul>
+
+<h2>Important Dates</h2>
+<p><b>Midterm Exam:</b> March 11, 2026<br />
+<b>Final Exam:</b> May 15, 2026 (1:00 - 3:00 PM)</p>
+
+<h2>Textbooks (Recommended)</h2>
+<ul>
+<li><i>Computer &amp; Internet Security: A Hands-on Approach</i>, Wenliang Du, Third Edition, 2022</li>
+<li><i>Network Security Essentials</i>, William Stallings, Sixth Edition, Pearson</li>
+</ul>
+
+<h2>Course Resources</h2>
+<ul>
+<li><a href="assets/CMSC687-Syllabus-SP26.pdf" target="_blank" style="color: #0066cc; font-weight: bold; font-size: 1.1em;"><b>Course Syllabus</b></a></li>
+</ul>
+
+<div id="footer">
+<div id="footer-text">
+Page modified 2026-03-26, by Yiwen Hu</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>
