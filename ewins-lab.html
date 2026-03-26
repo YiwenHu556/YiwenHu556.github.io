@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta name="generator" content="Yiwen Hu" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="assets/mysite.css" type="text/css" />
+<link rel="icon" type="image/png" href="assets/favicon.png?v=2" />
+<title>E-WiNS Lab</title>
+</head>
+<body>
+<div id="fwtitle">
+</div>
+<table summary="Table for page layout." id="tlayout">
+<tr valign="top">
+<td id="layout-menu">
+<div id="sidebar-placeholder"></div>
+<script>
+fetch('sidebar.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('sidebar-placeholder').innerHTML = data;
+    var links = document.querySelectorAll('#layout-menu a[href="ewins-lab.html"]');
+    if (links.length > 0) links[0].classList.add('current');
+  });
+</script>
+</td>
+<td id="layout-content">
+<div id="toptitle">
+<h1>E-WiNS Lab</h1>
+</div>
+
+<div style="text-align: center; margin-top: 50px;">
+<p style="font-size: 24px; font-weight: bold; color: #00274C;">Emerging Wireless Networks and Security Lab</p>
+<p style="font-size: 18px; margin-top: 20px;">This page is under construction. Stay tuned!</p>
+</div>
+
+<div id="footer">
+<div id="footer-text">
+Page modified 2025-11-20, by Yiwen Hu</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>
