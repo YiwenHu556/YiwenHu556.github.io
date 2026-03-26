@@ -53,13 +53,13 @@ fetch('sidebar.html')
 <h1>E-WiNS Lab</h1>
 </div>
 
-<p style="font-size: 20px; font-weight: bold; color: #00274C; text-align: center;">Emerging Wireless Networks and Security Lab</p>
+<p style="font-size: 28px; font-weight: bold; color: #00274C; text-align: center;">Emerging Wireless Networks and Security Lab</p>
 
 <h2>Impact and Context</h2>
 <p>The transition from 5G to 6G represents a fundamental shift toward an interconnected global intelligence. With the number of connected devices projected to reach into the tens of billions by 2030, the reliance on heterogeneous networks, spanning from satellite links to local sensor clusters, has never been greater. As demand for seamless automation, autonomous driving, and resilient global infrastructure grows, the need for robust, standardized communication protocols becomes a matter of critical infrastructure. Our work translates academic innovation into scalable solutions, facilitating the transition from conceptual network models to real-world deployment in the global digital economy.</p>
 
 <h2>Research Statement</h2>
-<p>Our lab is dedicated to the development and advancement of resilient, high-performance wireless communication and mobile systems. We aim to architect the future of connectivity, spanning the entire ecosystem from handheld mobile devices to large-scale Internet of Things (IoT) deployments, high-speed vehicular networks (V2X), and satellite-based communication links. By integrating advanced machine learning, cross-layer protocol design, and network optimization, we strive to bridge the gap between terrestrial infrastructure and non-terrestrial networks (NTN). Our mission is to solve the critical challenges of latency, reliability, and security, creating a seamless "ground-to-satellite" communication fabric that powers the next generation of autonomous systems and global connectivity.</p>
+<p>Our lab is dedicated to advancing high-performance, secure, and resilient wireless communication and mobile systems, enabling seamless "ground-to-satellite" connectivity that powers the next generation of autonomous systems and global communications; we architect the future of connectivity across handheld devices, large-scale Internet of Things deployments, vehicular networks (V2X), and satellite links through the integration of advanced machine learning, cross-layer protocol design, and network optimization.</p>
 
 <h2>Current Projects</h2>
 <ul>
@@ -148,7 +148,7 @@ We investigate the performance and security of mobile computing systems, with a 
     <img src="photos/lab/dharani-nadendla.jpg" alt="Dharani Nadendla" />
     <div class="info">
       <p class="name">Dharani Nadendla</p>
-      <p class="period">Fall 2025 - Present</p>
+      <p class="period">Fall 2025</p>
       <p class="bio">M.S. student researching mobile health systems and secure communication for healthcare applications.</p>
     </div>
   </div>
@@ -190,6 +190,43 @@ We investigate the performance and security of mobile computing systems, with a 
   </div>
 </div>
 
+<h3>Chief Security Officer</h3>
+<div class="team-grid">
+  <div class="team-card" style="width: 100%; background: linear-gradient(135deg, #f8f9ff, #eef1ff); border: 2px solid #c0c8e0;">
+    <img src="photos/xiaohua/xiaohua1.png" alt="Xiaohua" style="width: 140px; height: 140px;" />
+    <div class="info">
+      <p class="name" style="font-size: 1.2em;">Xiaohua Hu</p>
+      <p class="period">Since Day One - Present (and Forever)</p>
+      <p class="bio">Lab mascot, morale officer, and self-appointed Chief Security Officer. Xiaohua oversees all lab operations from her favorite nap spot, ensuring network threats are kept at bay through vigilant snoring. Specializes in penetration testing of treat bags, vulnerability assessment of couch cushions, and denial-of-service attacks on productivity. Her threat model is simple: if it's edible, eat it; if it's not, sleep on it.</p>
+    </div>
+  </div>
+</div>
+
+<h3>Gallery</h3>
+<style>
+.gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.gallery-grid img {
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.gallery-grid img:hover {
+  transform: scale(1.03);
+}
+</style>
+<div class="gallery-grid">
+  <img src="photos/xiaohua/xiaohua1.png" alt="Xiaohua sleeping" />
+  <img src="photos/xiaohua/xiaohua_yawn.jpg" alt="Xiaohua yawning" />
+  <img src="photos/xiaohua/northern.jpg" alt="Xiaohua watching the aurora" />
+</div>
+
 <div id="footer">
 <div id="footer-text">
 Page modified 2026-03-26, by Yiwen Hu</a>.
@@ -199,7 +236,7 @@ Page modified 2026-03-26, by Yiwen Hu</a>.
 </tr>
 </table>
 <script>
-document.querySelectorAll('.team-card img').forEach(function(img) {
+document.querySelectorAll('.team-card img, .gallery-grid img').forEach(function(img) {
   img.addEventListener('click', function() {
     document.getElementById('lightbox-image').src = this.src;
     document.getElementById('lightbox-overlay').classList.add('active');
