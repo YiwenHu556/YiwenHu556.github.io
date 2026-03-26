@@ -8,27 +8,6 @@
 <link rel="icon" type="image/png" href="assets/favicon.png?v=2" />
 <title>Yiwen Hu</title>
 <style>
-    .typed-text {
-        color: #2563eb;
-    }
-
-    .cursor {
-        display: inline-block;
-        width: 2px;
-        background-color: #333;
-        margin-left: 2px;
-        animation: blink 0.7s infinite;
-    }
-
-    @keyframes blink {
-        0%, 49% {
-            opacity: 1;
-        }
-        50%, 100% {
-            opacity: 0;
-        }
-    }
-
     /* Publication entry styles */
     .publication-entry {
       display: flex;
@@ -183,7 +162,19 @@ Baltimore, MD 21250<br /></p>
 <a href="https://www.linkedin.com/in/yiwen-hu-058817251/">[LinkedIn]</a> <br />
 <span style="color: gray; cursor: not-allowed;">[CV]</span> <br /></p>
 </td></tr></table>
-<p style="text-align: left; margin-top: 9px;"><b>Research Interests: <span class="typed-text" id="typed"></span><span class="cursor">&nbsp;</span></b></p>
+<div id="research-ticker-placeholder"></div>
+<script>
+fetch('animate/research_interest_animate.html')
+  .then(function(response) { return response.text(); })
+  .then(function(data) {
+    document.getElementById('research-ticker-placeholder').innerHTML = data;
+    document.getElementById('research-ticker-placeholder').querySelectorAll('script').forEach(function(oldScript) {
+      var newScript = document.createElement('script');
+      newScript.textContent = oldScript.textContent;
+      oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+  });
+</script>
 <div class="infoblock">
 <div class="blockcontent">
 <p><b>I am actively seeking self-motivated students for Ph.D. or Research Intern positions. 
@@ -408,50 +399,5 @@ Page modified 2025-11-20, by Yiwen Hu</a>.
 </td>
 </tr>
 </table>
-<script>
-    // Words to cycle through
-    const words = ['Mobile Systems', 'V2X Communications', '5G/6G Networks', 'Network Security', 'Mobile Health'];
-
-    let wordIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typedElement = document.getElementById('typed');
-
-    function type() {
-        const currentWord = words[wordIndex];
-
-        if (isDeleting) {
-            // Remove character
-            typedElement.textContent = currentWord.substring(0, charIndex - 1);
-            charIndex--;
-
-            // If word is fully deleted
-            if (charIndex === 0) {
-                isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length; // Move to next word
-                setTimeout(type, 500); // Pause before typing next word
-                return;
-            }
-        } else {
-            // Add character
-            typedElement.textContent = currentWord.substring(0, charIndex + 1);
-            charIndex++;
-
-            // If word is fully typed
-            if (charIndex === currentWord.length) {
-                isDeleting = true;
-                setTimeout(type, 2000); // Pause at full word (2 seconds)
-                return;
-            }
-        }
-
-        // Typing speed
-        const typingSpeed = isDeleting ? 25 : 50;
-        setTimeout(type, typingSpeed);
-    }
-
-    // Start the typing effect
-    type();
-</script>
 </body>
 </html>
