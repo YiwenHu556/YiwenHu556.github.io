@@ -92,13 +92,18 @@
         var setWidth = 0;
         var offset = 0;
         var initialized = false;
+        var paused = false;
+
+        var ticker = document.querySelector('.research-ticker');
+        ticker.addEventListener('mouseenter', function() { paused = true; });
+        ticker.addEventListener('mouseleave', function() { paused = false; });
 
         function animate() {
             if (!initialized) {
                 setWidth = document.getElementById('ticker-half-1').offsetWidth;
                 if (setWidth > 0) initialized = true;
             }
-            if (initialized) {
+            if (initialized && !paused) {
                 offset += speed;
                 if (offset >= setWidth) offset -= setWidth;
                 el.style.transform = 'translateX(' + (offset - setWidth) + 'px)';
