@@ -8,6 +8,33 @@
 <link rel="icon" type="image/png" href="assets/favicon.png?v=2" />
 <title>E-WiNS Lab</title>
 <style>
+.ewins-letter {
+  font-size: 1.2em;
+  color: #C6A300;
+  margin: 0 1.5px;
+  letter-spacing: 0px;
+  transition: color 1.8s ease-in-out, letter-spacing 1.8s ease-in-out, margin 1.8s ease-in-out;
+}
+.ewins-letter.collapsed-color {
+  color: #00274C;
+  letter-spacing: 3px;
+  margin: 0 0.5px;
+}
+.ewins-dash {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  position: relative;
+  top: 4px;
+  font-size: 1.1em;
+  font-weight: 800;
+  transition: max-width 1.8s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.4s ease-in-out;
+}
+.ewins-dash.visible {
+  max-width: 20px;
+  opacity: 1;
+}
 .lightbox-overlay {
   display: none;
   position: fixed;
@@ -53,58 +80,135 @@ fetch('sidebar.html')
 <h1>E-WiNS Lab</h1>
 </div>
 
-<p id="lab-title" style="font-size: 36px; font-weight: bold; color: #00274C; text-align: center; padding-top: 1.5em;"></p>
+<p id="lab-title" style="font-size: 36px; font-weight: bold; color: #00274C; text-align: center; padding-top: 1.5em; padding-bottom: 20px;"><span class="ewins-letter">E</span><span class="collapse-text">merging</span><span class="collapse-space"> </span><span class="ewins-dash">-</span><span class="ewins-letter">Wi</span><span class="collapse-text">reless</span><span class="collapse-space"> </span><span class="ewins-letter">N</span><span class="collapse-text">etworks</span><span class="collapse-space"> </span><span class="collapse-text">and</span><span class="collapse-space"> </span><span class="ewins-letter">S</span><span class="collapse-text">ecurity</span><span class="collapse-space"> </span><span class="collapse-text">Lab</span></p>
+<style>
+.collapse-text, .collapse-space {
+  display: inline-block;
+  overflow: hidden;
+  white-space: pre;
+  vertical-align: bottom;
+  transition: max-width 1.8s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1.4s ease-in-out;
+}
+.collapse-text.collapsed, .collapse-space.collapsed {
+  max-width: 0 !important;
+  opacity: 0;
+}
+</style>
 <script>
 (function() {
-    var words = ['Emerging', 'Wireless', 'Networks', 'and', 'Security', 'Lab'];
-    var matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*+=<>~';
-    var titleEl = document.getElementById('lab-title');
+  var matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*+=<>~';
+  var textParts = document.querySelectorAll('.collapse-text');
+  var allParts = document.querySelectorAll('.collapse-text, .collapse-space');
+  var originals = [];
+  textParts.forEach(function(el) { originals.push(el.textContent); });
+  allParts.forEach(function(el) {
+    el.style.maxWidth = el.scrollWidth + 'px';
+  });
 
-    // Build spans for each word
-    words.forEach(function(word, i) {
-        var span = document.createElement('span');
-        span.textContent = word;
-        span.className = 'title-word';
-        titleEl.appendChild(span);
-        if (i < words.length - 1) titleEl.appendChild(document.createTextNode(' '));
-    });
+  var letters = document.querySelectorAll('.ewins-letter');
+  var collapsed = false;
+  var dash = document.querySelector('.ewins-dash');
 
-    function glitchWord(span, original) {
-        var steps = 9 + Math.floor(Math.random() * 9);
-        var step = 0;
-        span.classList.add('glitching');
-        var iv = setInterval(function() {
-            if (step < steps) {
-                var scrambled = '';
-                for (var i = 0; i < original.length; i++) {
-                    if (Math.random() < 0.4) {
-                        scrambled += matrixChars[Math.floor(Math.random() * matrixChars.length)];
-                    } else {
-                        scrambled += original[i];
-                    }
-                }
-                span.textContent = scrambled;
-                step++;
-            } else {
-                span.textContent = original;
-                span.classList.remove('glitching');
-                clearInterval(iv);
-            }
-        }, 20);
-    }
-
-    titleEl.querySelectorAll('.title-word').forEach(function(span, idx) {
-        var original = words[idx];
-        function schedule() {
-            setTimeout(function() {
-                if (!span.classList.contains('glitching')) {
-                    glitchWord(span, original);
-                }
-                schedule();
-            }, 6000 + Math.random() * 10000);
+  function glitchIn(span, original) {
+    var duration = 2000;
+    var startTime = Date.now();
+    function tick() {
+      var elapsed = Date.now() - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      if (progress < 1) {
+        var scrambled = '';
+        // More characters settle as progress increases
+        var settleChance = progress * progress * progress;
+        // Glitch chance decreases as progress increases
+        var glitchChance = 1 - progress;
+        for (var i = 0; i < original.length; i++) {
+          if (original[i] === ' ') {
+            scrambled += ' ';
+          } else if (Math.random() < settleChance) {
+            scrambled += original[i];
+          } else if (Math.random() < glitchChance) {
+            scrambled += matrixChars[Math.floor(Math.random() * matrixChars.length)];
+          } else {
+            scrambled += original[i];
+          }
         }
-        schedule();
+        span.textContent = scrambled;
+        // Speed adapts: fast at start (15ms), slow at end (60ms)
+        var delay = 15 + progress * 45;
+        setTimeout(tick, delay);
+      } else {
+        span.textContent = original;
+      }
+    }
+    tick();
+  }
+
+  function glitchOut(span, original) {
+    var duration = 1800;
+    var startTime = Date.now();
+    function tick() {
+      var elapsed = Date.now() - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      if (progress < 1) {
+        var scrambled = '';
+        // Fewer correct characters as progress increases
+        var correctChance = (1 - progress) * (1 - progress);
+        // Glitch chance increases
+        var glitchChance = progress;
+        for (var i = 0; i < original.length; i++) {
+          if (original[i] === ' ') {
+            scrambled += ' ';
+          } else if (Math.random() < correctChance) {
+            scrambled += original[i];
+          } else if (Math.random() < glitchChance) {
+            scrambled += matrixChars[Math.floor(Math.random() * matrixChars.length)];
+          } else {
+            scrambled += original[i];
+          }
+        }
+        span.textContent = scrambled;
+        // Speed adapts: slow at start (60ms), fast at end (15ms)
+        var delay = 60 - progress * 45;
+        setTimeout(tick, delay);
+      } else {
+        span.textContent = original;
+      }
+    }
+    tick();
+  }
+
+  function toggle() {
+    collapsed = !collapsed;
+    allParts.forEach(function(el) {
+      if (collapsed) {
+        el.classList.add('collapsed');
+      } else {
+        el.classList.remove('collapsed');
+      }
     });
+    letters.forEach(function(el) {
+      if (collapsed) {
+        el.classList.add('collapsed-color');
+      } else {
+        el.classList.remove('collapsed-color');
+      }
+    });
+    if (collapsed) {
+      dash.classList.add('visible');
+      // Glitch text parts when collapsing
+      textParts.forEach(function(span, idx) {
+        glitchOut(span, originals[idx]);
+      });
+    } else {
+      dash.classList.remove('visible');
+      // Glitch text parts when expanding
+      textParts.forEach(function(span, idx) {
+        glitchIn(span, originals[idx]);
+      });
+    }
+    setTimeout(toggle, collapsed ? 6000 : 8000);
+  }
+  setTimeout(toggle, 4000);
 })();
 </script>
 
@@ -282,7 +386,7 @@ We investigate the performance and security of mobile computing systems, with a 
 
 <div id="footer">
 <div id="footer-text">
-Page modified 2026-03-26, by Yiwen Hu</a>.
+Page modified 2026-03-27, by Yiwen Hu</a>.
 </div>
 </div>
 </td>
