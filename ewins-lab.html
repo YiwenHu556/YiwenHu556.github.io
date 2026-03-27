@@ -144,7 +144,7 @@ fetch('sidebar.html')
   }
 
   function glitchOut(span, original) {
-    var duration = 1800;
+    var duration = 2300;
     var startTime = Date.now();
     function tick() {
       var elapsed = Date.now() - startTime;
@@ -177,38 +177,30 @@ fetch('sidebar.html')
     tick();
   }
 
-  function toggle() {
-    collapsed = !collapsed;
-    allParts.forEach(function(el) {
-      if (collapsed) {
-        el.classList.add('collapsed');
-      } else {
-        el.classList.remove('collapsed');
-      }
-    });
-    letters.forEach(function(el) {
-      if (collapsed) {
-        el.classList.add('collapsed-color');
-      } else {
-        el.classList.remove('collapsed-color');
-      }
-    });
-    if (collapsed) {
-      dash.classList.add('visible');
-      // Glitch text parts when collapsing
-      textParts.forEach(function(span, idx) {
-        glitchOut(span, originals[idx]);
-      });
-    } else {
-      dash.classList.remove('visible');
-      // Glitch text parts when expanding
-      textParts.forEach(function(span, idx) {
-        glitchIn(span, originals[idx]);
-      });
-    }
-    setTimeout(toggle, collapsed ? 6000 : 8000);
+  function doCollapse() {
+    collapsed = true;
+    allParts.forEach(function(el) { el.classList.add('collapsed'); });
+    letters.forEach(function(el) { el.classList.add('collapsed-color'); });
+    dash.classList.add('visible');
+    setTimeout(startExpand, 6000);
   }
-  setTimeout(toggle, 4000);
+
+  function startExpand() {
+    collapsed = false;
+    allParts.forEach(function(el) { el.classList.remove('collapsed'); });
+    letters.forEach(function(el) { el.classList.remove('collapsed-color'); });
+    dash.classList.remove('visible');
+    textParts.forEach(function(span, idx) { glitchIn(span, originals[idx]); });
+    setTimeout(startCollapse, 8000);
+  }
+
+  function startCollapse() {
+    // Start glitch 1s before actual collapse
+    textParts.forEach(function(span, idx) { glitchOut(span, originals[idx]); });
+    setTimeout(doCollapse, 500);
+  }
+
+  setTimeout(startCollapse, 4000);
 })();
 </script>
 
