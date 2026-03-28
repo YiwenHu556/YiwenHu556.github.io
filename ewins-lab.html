@@ -37,6 +37,17 @@
   max-width: 20px;
   opacity: 1;
 }
+.paw-print {
+  position: absolute;
+  font-size: 28px;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 2.5s ease-out;
+  z-index: 10;
+}
+.paw-print.fading {
+  opacity: 0;
+}
 .lightbox-overlay {
   display: none;
   position: fixed;
@@ -82,7 +93,7 @@ fetch('sidebar.html')
 <h1>E-WiNS Lab</h1>
 </div>
 
-<div style="height: 120px; display: flex; align-items: center; justify-content: center;"><p id="lab-title" style="font-size: 36px; font-weight: bold; color: #00274C; text-align: center; margin: 0;"><span style="white-space:nowrap"><span class="ewins-letter">E</span><span class="collapse-text">merging</span></span><span class="collapse-space"> </span><span class="ewins-dash">-</span><span style="white-space:nowrap"><span class="ewins-letter">Wi</span><span class="collapse-text">reless</span></span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="ewins-letter">N</span><span class="collapse-text">etworks</span></span><span class="collapse-space"> </span><span class="collapse-text">and</span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="ewins-letter">S</span><span class="collapse-text">ecurity</span></span><span class="collapse-space"> </span><span class="collapse-text">Lab</span></p></div>
+<div id="title-area" style="height: 120px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; user-select: none;"><p id="lab-title" style="font-size: 36px; font-weight: bold; color: #00274C; text-align: center; margin: 0;"><span style="white-space:nowrap"><span class="ewins-letter">E</span><span class="collapse-text">merging</span></span><span class="collapse-space"> </span><span class="ewins-dash">-</span><span style="white-space:nowrap"><span class="ewins-letter">Wi</span><span class="collapse-text">reless</span></span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="ewins-letter">N</span><span class="collapse-text">etworks</span></span><span class="collapse-space"> </span><span class="collapse-text">and</span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="ewins-letter">S</span><span class="collapse-text">ecurity</span></span><span class="collapse-space"> </span><span class="collapse-text">Lab</span></p></div>
 <style>
 .collapse-text, .collapse-space {
   display: inline-block;
@@ -203,6 +214,35 @@ fetch('sidebar.html')
   }
 
   setTimeout(startCollapse, 4000);
+
+  // Paw print Easter egg
+  var titleArea = document.getElementById('title-area');
+  titleArea.addEventListener('click', function(e) {
+    var rect = titleArea.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    var rotation = (Math.random() - 0.5) * 40; // -20 to +20 degrees
+
+    var paw = document.createElement('span');
+    paw.className = 'paw-print';
+    paw.textContent = '\uD83D\uDC3E'; // 🐾
+    paw.style.left = (x - 14) + 'px';
+    paw.style.top = (y - 14) + 'px';
+    paw.style.transform = 'rotate(' + rotation + 'deg)';
+    titleArea.appendChild(paw);
+
+    // Start fade
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        paw.classList.add('fading');
+      });
+    });
+
+    // Remove after fade
+    setTimeout(function() {
+      if (paw.parentNode) paw.parentNode.removeChild(paw);
+    }, 3000);
+  });
 })();
 </script>
 
