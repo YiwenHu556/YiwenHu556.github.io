@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta name="generator" content="Yiwen Hu" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="assets/mysite.css" type="text/css" />
+<link rel="icon" type="image/png" href="assets/favicon.png?v=2" />
+<title>E-WiNS Lab - YouTube</title>
+<style>
+.yt-subscribe-section {
+  text-align: center;
+  margin: 20px 0 30px 0;
+  padding: 20px;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+.yt-subscribe-section a.yt-btn {
+  display: inline-block;
+  background: #00274C;
+  color: white !important;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  border: none !important;
+  margin-top: 10px;
+}
+.yt-subscribe-section a.yt-btn:hover {
+  background: #003366;
+  border: none !important;
+}
+.yt-video-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.yt-video-card {
+  width: calc(33.33% - 11px);
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+.yt-video-card:hover {
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
+.yt-video-card .thumb-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+.yt-video-card .thumb-container img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  border-radius: 0;
+}
+.yt-video-card .thumb-container .play-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px; height: 50px;
+  background: rgba(0,0,0,0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.yt-video-card .thumb-container .play-btn::after {
+  content: '';
+  display: block;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 18px;
+  border-color: transparent transparent transparent white;
+  margin-left: 3px;
+}
+.yt-video-card .card-info {
+  padding: 10px 12px;
+}
+.yt-video-card .card-info .title {
+  font-weight: bold;
+  font-size: 0.95em;
+  margin: 0;
+  line-height: 1.3;
+}
+.yt-video-card .card-info .date {
+  font-size: 0.8em;
+  color: #888;
+  margin: 4px 0 0 0;
+}
+.yt-player-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.yt-player-container iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+}
+@media (max-width: 768px) {
+  .yt-video-card { width: 100%; }
+}
+</style>
+</head>
+<body>
+<div id="fwtitle">
+</div>
+<table summary="Table for page layout." id="tlayout">
+<tr valign="top">
+<td id="layout-menu">
+<div id="sidebar-placeholder"></div>
+<script>
+fetch('sidebar.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('sidebar-placeholder').innerHTML = data;
+    var links = document.querySelectorAll('#layout-menu a[href="youtube.html"]');
+    if (links.length > 0) links[0].classList.add('current');
+  });
+</script>
+</td>
+<td id="layout-content">
+<div id="toptitle">
+<h1>E-WiNS YouTube Channel</h1>
+</div>
+
+<div class="yt-subscribe-section">
+  <p style="font-size: 18px; margin-bottom: 8px;"><b>E-WiNS Lab @ UMBC</b></p>
+  <p style="color: #666; margin-bottom: 12px;">Research demos, tutorials, and project presentations.</p>
+  <a class="yt-btn" href="https://www.youtube.com/@E-WiNS-UMBC" target="_blank">Visit Our Channel</a>
+</div>
+
+<h2>CMSC 481 Project Tutorials</h2>
+
+<!-- Floating video player overlay -->
+<div id="yt-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; cursor:pointer;" onclick="closePlayer()">
+  <div style="width:70%; max-width:900px; position:relative;" onclick="event.stopPropagation()">
+    <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:8px;">
+      <iframe id="yt-player-iframe" src="" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none; border-radius:8px;" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Dynamic video cards -->
+<div id="tutorial-videos" class="yt-video-grid">
+  Loading videos...
+</div>
+
+<script>
+(function() {
+  var playlists = [
+    {id: 'PLSPlC5kXHGGNiF1yEVC2krmCTRWgUqqBO', containerId: 'tutorial-videos'}
+  ];
+
+  playlists.forEach(function(pl) {
+    var rssUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?playlist_id=' + pl.id;
+    fetch(rssUrl)
+      .then(function(resp) { return resp.json(); })
+      .then(function(data) {
+        var container = document.getElementById(pl.containerId);
+        if (!data.items || data.items.length === 0) {
+          container.innerHTML = '<p>No videos available.</p>';
+          return;
+        }
+        var html = '';
+        data.items.forEach(function(item) {
+          var videoId = item.link.split('v=')[1];
+          var date = new Date(item.pubDate).toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'});
+          html += '<div class="yt-video-card">';
+          html += '<div class="thumb-container" onclick="playVideo(\'' + videoId + '\')">';
+          html += '<img src="https://img.youtube.com/vi/' + videoId + '/mqdefault.jpg" alt="' + item.title + '" />';
+          html += '<div class="play-btn"></div>';
+          html += '</div>';
+          html += '<div class="card-info">';
+          html += '<p class="title">' + item.title + '</p>';
+          html += '<p class="date">' + date + '</p>';
+          html += '</div>';
+          html += '</div>';
+        });
+        container.innerHTML = html;
+      })
+      .catch(function(err) {
+        document.getElementById(pl.containerId).innerHTML = '<p>Could not load videos. <a href="https://www.youtube.com/playlist?list=' + pl.id + '" target="_blank">View on YouTube</a></p>';
+      });
+  });
+})();
+
+function playVideo(videoId) {
+  var overlay = document.getElementById('yt-overlay');
+  var iframe = document.getElementById('yt-player-iframe');
+  iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+  overlay.style.display = 'flex';
+}
+
+function closePlayer() {
+  var overlay = document.getElementById('yt-overlay');
+  var iframe = document.getElementById('yt-player-iframe');
+  overlay.style.display = 'none';
+  iframe.src = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closePlayer();
+});
+</script>
+
+<div id="footer">
+<div id="footer-text">
+Page modified 2026-03-30, by Yiwen Hu</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>
