@@ -411,12 +411,22 @@ We investigate the performance and security of mobile computing systems, with a 
 .gallery-grid img:hover {
   transform: scale(1.03);
 }
+@keyframes shake {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: rotate(-5deg); }
+  20%, 40%, 60%, 80% { transform: rotate(5deg); }
+}
+.shake-animation {
+  animation: shake 0.6s ease-in-out;
+}
 </style>
 <div class="gallery-grid">
-  <img src="photos/xiaohua/xiaohua1.png" alt="Xiaohua sleeping" />
+  <img id="xiaohua-image" src="photos/xiaohua/xiaohua1.png" alt="Xiaohua sleeping" />
   <img src="photos/xiaohua/xiaohua_yawn.jpg" alt="Xiaohua yawning" />
   <img src="photos/xiaohua/northern.jpg" alt="Xiaohua watching the aurora" />
 </div>
+<audio id="snore-audio" src="photos/xiaohua/snore-sfx.mp3" preload="auto"></audio>
+<audio id="yawn-audio" src="photos/xiaohua/yawn.mp3" preload="auto"></audio>
 
 <div id="footer">
 <div id="footer-text">
@@ -427,12 +437,63 @@ Page modified 2026-03-27, by Yiwen Hu</a>.
 </tr>
 </table>
 <script>
+// Lightbox for team cards and non-interactive gallery images
 document.querySelectorAll('.team-card img, .gallery-grid img').forEach(function(img) {
+  if (img.id === 'xiaohua-image') return; // skip Easter egg image
   img.addEventListener('click', function() {
     document.getElementById('lightbox-image').src = this.src;
     document.getElementById('lightbox-overlay').classList.add('active');
   });
 });
+
+// Xiaohua Easter egg
+(function() {
+  var image = document.getElementById('xiaohua-image');
+  var snoreAudio = document.getElementById('snore-audio');
+  var yawnAudio = document.getElementById('yawn-audio');
+  var hasPlayed = false;
+  var shakeCount = 0;
+  var isYawning = false;
+
+  function triggerShake() {
+    if (!hasPlayed && !isYawning) {
+      image.classList.add('shake-animation');
+      var snorePromise = snoreAudio.play();
+      if (snorePromise !== undefined) {
+        snorePromise.catch(function() {});
+      }
+      hasPlayed = true;
+      shakeCount++;
+      if (shakeCount >= 5) {
+        isYawning = true;
+        setTimeout(function() {
+          image.src = 'photos/xiaohua/xiaohua_yawn.jpg';
+          var yawnPromise = yawnAudio.play();
+          if (yawnPromise !== undefined) {
+            yawnPromise.catch(function() {});
+          }
+        }, 600);
+      }
+    }
+  }
+
+  image.addEventListener('mouseenter', triggerShake);
+  image.addEventListener('mouseleave', function() { hasPlayed = false; });
+  image.addEventListener('click', function() {
+    triggerShake();
+    setTimeout(function() { hasPlayed = false; }, 100);
+    document.getElementById('lightbox-image').src = image.src;
+    document.getElementById('lightbox-overlay').classList.add('active');
+  });
+  image.addEventListener('animationend', function() {
+    image.classList.remove('shake-animation');
+  });
+  yawnAudio.addEventListener('ended', function() {
+    image.src = 'photos/xiaohua/xiaohua1.png';
+    shakeCount = 0;
+    isYawning = false;
+  });
+})();
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     var overlay = document.getElementById('lightbox-overlay');

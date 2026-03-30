@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta name="generator" content="Yiwen Hu" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="assets/mysite.css" type="text/css" />
+<link rel="icon" type="image/png" href="assets/favicon.png?v=2" />
+<title>E-WiNS Lab - GitHub</title>
+<style>
+.gh-profile {
+  text-align: center;
+  margin: 20px 0 30px 0;
+  padding: 24px;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+.gh-profile img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #ddd;
+  margin-bottom: 12px;
+}
+.gh-profile .gh-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+}
+.gh-profile .gh-bio {
+  color: #666;
+  margin: 0 0 16px 0;
+}
+.gh-profile a.gh-btn {
+  display: inline-block;
+  background: #24292e;
+  color: white !important;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  border: none !important;
+}
+.gh-profile a.gh-btn:hover {
+  background: #444d56;
+  border: none !important;
+}
+.gh-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin: 16px 0;
+}
+.gh-stat {
+  text-align: center;
+}
+.gh-stat .num {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00274C;
+}
+.gh-stat .label {
+  font-size: 0.85em;
+  color: #888;
+}
+.gh-repo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.gh-repo-card {
+  width: calc(50% - 8px);
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s ease;
+}
+.gh-repo-card:hover {
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+.gh-repo-card .repo-name {
+  font-weight: bold;
+  font-size: 1.05em;
+  margin: 0 0 6px 0;
+}
+.gh-repo-card .repo-desc {
+  font-size: 0.9em;
+  color: #555;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+.gh-repo-card .repo-meta {
+  font-size: 0.8em;
+  color: #888;
+}
+.gh-repo-card .repo-meta span {
+  margin-right: 12px;
+  padding: 0;
+}
+@media (max-width: 768px) {
+  .gh-repo-card { width: 100%; }
+}
+</style>
+</head>
+<body>
+<div id="fwtitle">
+</div>
+<table summary="Table for page layout." id="tlayout">
+<tr valign="top">
+<td id="layout-menu">
+<div id="sidebar-placeholder"></div>
+<script>
+fetch('sidebar.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('sidebar-placeholder').innerHTML = data;
+    var links = document.querySelectorAll('#layout-menu a[href="github.html"]');
+    if (links.length > 0) links[0].classList.add('current');
+  });
+</script>
+</td>
+<td id="layout-content">
+<div id="toptitle">
+<h1>E-WiNS Lab on GitHub</h1>
+</div>
+
+<!-- Profile section -->
+<div class="gh-profile" id="gh-profile">
+  Loading...
+</div>
+
+<h2>Repositories</h2>
+<div id="gh-repos" class="gh-repo-grid">
+  Loading repositories...
+</div>
+
+<script>
+(function() {
+  var username = 'ewinslab';
+
+  // Fetch profile
+  fetch('https://api.github.com/users/' + username)
+    .then(function(r) { return r.json(); })
+    .then(function(user) {
+      var html = '';
+      html += '<img src="' + user.avatar_url + '" alt="' + user.login + '" />';
+      html += '<p class="gh-name">' + (user.name || user.login) + '</p>';
+      html += '<p class="gh-bio">' + (user.bio || 'Emerging Wireless Networks and Security Lab @ UMBC') + '</p>';
+      html += '<div class="gh-stats">';
+      html += '<div class="gh-stat"><div class="num">' + user.public_repos + '</div><div class="label">Repositories</div></div>';
+      html += '<div class="gh-stat"><div class="num">' + user.followers + '</div><div class="label">Followers</div></div>';
+      html += '<div class="gh-stat"><div class="num">' + user.following + '</div><div class="label">Following</div></div>';
+      html += '</div>';
+      html += '<a class="gh-btn" href="https://github.com/' + username + '" target="_blank">Visit on GitHub</a>';
+      document.getElementById('gh-profile').innerHTML = html;
+    })
+    .catch(function() {
+      document.getElementById('gh-profile').innerHTML = '<p class="gh-name">E-WiNS Lab</p><p class="gh-bio">Emerging Wireless Networks and Security Lab @ UMBC</p><a class="gh-btn" href="https://github.com/' + username + '" target="_blank">Visit on GitHub</a>';
+    });
+
+  // Fetch repos
+  fetch('https://api.github.com/users/' + username + '/repos?sort=updated&per_page=20')
+    .then(function(r) { return r.json(); })
+    .then(function(repos) {
+      var container = document.getElementById('gh-repos');
+      if (!repos || repos.length === 0) {
+        container.innerHTML = '<p>No public repositories yet. Stay tuned!</p>';
+        return;
+      }
+      var html = '';
+      repos.forEach(function(repo) {
+        if (repo.fork) return;
+        var updated = new Date(repo.updated_at).toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'});
+        html += '<div class="gh-repo-card">';
+        html += '<p class="repo-name"><a href="' + repo.html_url + '" target="_blank">' + repo.name + '</a></p>';
+        html += '<p class="repo-desc">' + (repo.description || 'No description') + '</p>';
+        html += '<p class="repo-meta">';
+        if (repo.language) html += '<span>' + repo.language + '</span>';
+        html += '<span>Updated ' + updated + '</span>';
+        html += '</p>';
+        html += '</div>';
+      });
+      if (!html) html = '<p>No public repositories yet. Stay tuned!</p>';
+      container.innerHTML = html;
+    })
+    .catch(function() {
+      document.getElementById('gh-repos').innerHTML = '<p>Could not load repositories. <a href="https://github.com/' + username + '" target="_blank">View on GitHub</a></p>';
+    });
+})();
+</script>
+
+<div id="footer">
+<div id="footer-text">
+Page modified 2026-03-30, by Yiwen Hu</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>
