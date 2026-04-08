@@ -162,50 +162,37 @@ fetch('sidebar.html')
   </div>
 </div>
 
-<!-- Dynamic video cards -->
-<div id="tutorial-videos" class="yt-video-grid">
-  Loading videos...
+<div class="yt-video-grid">
+  <div class="yt-video-card">
+    <div class="thumb-container" onclick="playVideo('8f5URchfCqo')">
+      <img src="https://img.youtube.com/vi/8f5URchfCqo/mqdefault.jpg" alt="rUDP Packet Demo" />
+      <div class="play-btn"></div>
+    </div>
+    <div class="card-info">
+      <p class="title">rUDP Packet Demo</p>
+    </div>
+  </div>
+  <div class="yt-video-card">
+    <div class="thumb-container" onclick="playVideo('_VSeEiWSaxY')">
+      <img src="https://img.youtube.com/vi/_VSeEiWSaxY/mqdefault.jpg" alt="Network Communication and Python Sockets" />
+      <div class="play-btn"></div>
+    </div>
+    <div class="card-info">
+      <p class="title">Network Communication and Python Sockets</p>
+    </div>
+  </div>
+  <div class="yt-video-card">
+    <div class="thumb-container" onclick="playVideo('bZNm-OB4Kks')">
+      <img src="https://img.youtube.com/vi/bZNm-OB4Kks/mqdefault.jpg" alt="Project Quick Start Guide" />
+      <div class="play-btn"></div>
+    </div>
+    <div class="card-info">
+      <p class="title">Project Quick Start Guide</p>
+    </div>
+  </div>
 </div>
 
 <script>
-(function() {
-  var playlists = [
-    {id: 'PLSPlC5kXHGGNiF1yEVC2krmCTRWgUqqBO', containerId: 'tutorial-videos'}
-  ];
-
-  playlists.forEach(function(pl) {
-    var rssUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?playlist_id=' + pl.id;
-    fetch(rssUrl)
-      .then(function(resp) { return resp.json(); })
-      .then(function(data) {
-        var container = document.getElementById(pl.containerId);
-        if (!data.items || data.items.length === 0) {
-          container.innerHTML = '<p>No videos available.</p>';
-          return;
-        }
-        var html = '';
-        data.items.forEach(function(item) {
-          var videoId = item.link.split('v=')[1];
-          var date = new Date(item.pubDate).toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'});
-          html += '<div class="yt-video-card">';
-          html += '<div class="thumb-container" onclick="playVideo(\'' + videoId + '\')">';
-          html += '<img src="https://img.youtube.com/vi/' + videoId + '/mqdefault.jpg" alt="' + item.title + '" />';
-          html += '<div class="play-btn"></div>';
-          html += '</div>';
-          html += '<div class="card-info">';
-          html += '<p class="title">' + item.title + '</p>';
-          html += '<p class="date">' + date + '</p>';
-          html += '</div>';
-          html += '</div>';
-        });
-        container.innerHTML = html;
-      })
-      .catch(function(err) {
-        document.getElementById(pl.containerId).innerHTML = '<p>Could not load videos. <a href="https://www.youtube.com/playlist?list=' + pl.id + '" target="_blank">View on YouTube</a></p>';
-      });
-  });
-})();
-
 function playVideo(videoId) {
   var overlay = document.getElementById('yt-overlay');
   var iframe = document.getElementById('yt-player-iframe');
