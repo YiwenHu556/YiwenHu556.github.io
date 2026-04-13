@@ -41,6 +41,10 @@
       "News": {
         "backgroundColor": "#428aa0",
         "textColor": "white"
+      },
+      "GitHub": {
+        "backgroundColor": "#24292e",
+        "textColor": "white"
       }
     },
     "buttonDefaults": {
@@ -60,7 +64,12 @@
       "authors": "<span style=\"background-color: white; color: black; font-weight: bold;\"><u>Yiwen Hu</u></span>, Min-Yue Chen, Haitian Yan, Chuan-Yi Cheng, Guan-Hua Tu, Chi-Yu Li, Tian Xie, Chunyi Peng, Li Xiao, and Jiliang Tang",
       "details": "Proceedings of ACM the 30th Annual International Conference On Mobile Computing And Networking (MobiCom) 2024, September 30- October 4, 2024, Washington, D.C., USA (Acceptance rate: 55/288 = 19.09%, Winter run).",
       "notes": "",
-      "buttons": []
+      "buttons": [
+        {
+          "name": "GitHub",
+          "link": "https://github.com/EmergencyAccess/Emergency-Blocker-Dialer-Tools"
+        }
+      ]
     },
     {
       "year": "2024",

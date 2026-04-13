@@ -476,3 +476,10 @@ table.imgtable, table.imgtable td {
     color: white !important;
 }
 
+.btn--github {
+    font-size: 0.75em;
+    padding: 0.1em 1em;
+    background-color: #24292e;
+    color: white !important;
+}
+

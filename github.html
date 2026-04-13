@@ -47,24 +47,6 @@
   background: #444d56;
   border: none !important;
 }
-.gh-stats {
-  display: flex;
-  justify-content: center;
-  gap: 32px;
-  margin: 16px 0;
-}
-.gh-stat {
-  text-align: center;
-}
-.gh-stat .num {
-  font-size: 24px;
-  font-weight: bold;
-  color: #00274C;
-}
-.gh-stat .label {
-  font-size: 0.85em;
-  color: #888;
-}
 .gh-repo-grid {
   display: flex;
   flex-wrap: wrap;
@@ -151,11 +133,6 @@ fetch('sidebar.html')
       html += '<img src="' + user.avatar_url + '" alt="' + user.login + '" />';
       html += '<p class="gh-name">' + (user.name || user.login) + '</p>';
       html += '<p class="gh-bio">' + (user.bio || 'Emerging Wireless Networks and Security Lab @ UMBC') + '</p>';
-      html += '<div class="gh-stats">';
-      html += '<div class="gh-stat"><div class="num">' + user.public_repos + '</div><div class="label">Repositories</div></div>';
-      html += '<div class="gh-stat"><div class="num">' + user.followers + '</div><div class="label">Followers</div></div>';
-      html += '<div class="gh-stat"><div class="num">' + user.following + '</div><div class="label">Following</div></div>';
-      html += '</div>';
       html += '<a class="gh-btn" href="https://github.com/' + username + '" target="_blank">Visit on GitHub</a>';
       document.getElementById('gh-profile').innerHTML = html;
     })
@@ -163,21 +140,54 @@ fetch('sidebar.html')
       document.getElementById('gh-profile').innerHTML = '<p class="gh-name">E-WiNS Lab</p><p class="gh-bio">Emerging Wireless Networks and Security Lab @ UMBC</p><a class="gh-btn" href="https://github.com/' + username + '" target="_blank">Visit on GitHub</a>';
     });
 
-  // Fetch repos
-  fetch('https://api.github.com/users/' + username + '/repos?sort=updated&per_page=20')
+  // Extra repos to include alongside the synced account repos.
+  // Optional `description` overrides the GitHub API description.
+  var extraRepos = [
+    {
+      slug: 'EmergencyAccess/Emergency-Blocker-Dialer-Tools',
+      description: 'An Android toolkit that blocks SIP/3G emergency-call signaling (Emerg-Call-Blocker) and reroutes 911 calls through the strongest available network including Wi-Fi (Emerg-Call-Dialer), built to validate cellular emergency-service defects from our ACM MobiCom \'22/\'24 work.'
+    }
+  ];
+
+  // Fetch user repos and extra repos in parallel
+  var userReposPromise = fetch('https://api.github.com/users/' + username + '/repos?sort=updated&per_page=20')
     .then(function(r) { return r.json(); })
-    .then(function(repos) {
+    .catch(function() { return []; });
+
+  var extraReposPromises = extraRepos.map(function(entry) {
+    return fetch('https://api.github.com/repos/' + entry.slug)
+      .then(function(r) { return r.json(); })
+      .then(function(repo) {
+        if (repo && !repo.message && entry.description) {
+          repo.description = entry.description;
+        }
+        return repo;
+      })
+      .catch(function() { return null; });
+  });
+
+  Promise.all([userReposPromise].concat(extraReposPromises))
+    .then(function(results) {
+      var userRepos = Array.isArray(results[0]) ? results[0] : [];
+      var extras = results.slice(1).filter(function(x) { return x && !x.message && x.html_url; });
+      var allRepos = extras.concat(userRepos);
+      // Dedupe by full_name in case an extra repo is already in the user list
+      var seen = {};
+      allRepos = allRepos.filter(function(r) {
+        if (seen[r.full_name]) return false;
+        seen[r.full_name] = true;
+        return true;
+      });
+      // Sort by updated_at descending
+      allRepos.sort(function(a, b) { return new Date(b.updated_at) - new Date(a.updated_at); });
+
       var container = document.getElementById('gh-repos');
-      if (!repos || repos.length === 0) {
-        container.innerHTML = '<p>No public repositories yet. Stay tuned!</p>';
-        return;
-      }
       var html = '';
-      repos.forEach(function(repo) {
+      allRepos.forEach(function(repo) {
         if (repo.fork) return;
         var updated = new Date(repo.updated_at).toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'});
         html += '<div class="gh-repo-card">';
-        html += '<p class="repo-name"><a href="' + repo.html_url + '" target="_blank">' + repo.name + '</a></p>';
+        html += '<p class="repo-name"><a href="' + repo.html_url + '" target="_blank">' + repo.full_name + '</a></p>';
         html += '<p class="repo-desc">' + (repo.description || 'No description') + '</p>';
         html += '<p class="repo-meta">';
         if (repo.language) html += '<span>' + repo.language + '</span>';
