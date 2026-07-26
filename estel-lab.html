@@ -20,8 +20,10 @@
 #lab-slogan {
   /* Tagline under the full name. JS resizes it to stay proportional to whatever
      size the title settles at; this clamp is the no-JS fallback. */
-  font-size: clamp(12px, 0.92vw, 16px);
-  font-weight: 400;
+  font-size: calc(clamp(12px, 0.92vw, 16px) + 5pt);
+  /* 600 rather than 500: Segoe UI (the Windows match in this stack) has no true
+     Medium, so 500 would fall back to Regular and render unchanged. */
+  font-weight: 600;
   color: rgba(0, 39, 76, 0.72);
   letter-spacing: 0.055em;
   text-align: center;
@@ -50,9 +52,36 @@
   letter-spacing: 3px;
   margin: 0 0.5px;
 }
-/* S and T head their own words when expanded, but read as lowercase inside "Estel". */
-.estel-letter.lower-collapsed.collapsed-color {
-  text-transform: lowercase;
+/* S and T head their own words when expanded but read as lowercase inside
+   "Estel". text-transform is not animatable and snapped between the two cases,
+   so both glyphs are stacked in a single grid cell and crossfaded instead. The
+   cell takes the width of the wider glyph, so nothing reflows mid-fade. */
+.estel-letter.case-swap {
+  display: inline-grid;
+  justify-items: center;
+  vertical-align: baseline;
+}
+.estel-letter.case-swap > span {
+  grid-area: 1 / 1;
+  transition: opacity 1.4s ease-in-out;
+}
+.estel-letter.case-swap > .glyph-lower {
+  opacity: 0;
+}
+/* "Te" carries a strong negative kern, but kerning cannot cross an element
+   boundary, so splitting the gold T from "errestrial" loses it and opens a gap
+   wider than every other letter join. Pull the following text back by roughly
+   the kern the font would have applied. Expanded state only: the collapsed
+   wordmark wants its deliberate letter-spacing instead. em-based so it tracks
+   the title as it scales. */
+.estel-letter.kern-right:not(.collapsed-color) {
+  margin-right: -0.035em;
+}
+.estel-letter.case-swap.collapsed-color > .glyph-upper {
+  opacity: 0;
+}
+.estel-letter.case-swap.collapsed-color > .glyph-lower {
+  opacity: 1;
 }
 .paw-print {
   position: absolute;
@@ -110,7 +139,7 @@ fetch('sidebar.html')
 <h1>Estel Lab</h1>
 </div>
 
-<div id="title-area" style="height: 148px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; user-select: none;"><p id="lab-title"><span style="white-space:nowrap"><span class="estel-letter">E</span><span class="collapse-text">xploring</span></span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="estel-letter lower-collapsed">S</span><span class="collapse-text">ecure</span></span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="collapse-text">Sky-</span><span class="estel-letter lower-collapsed">T</span><span class="collapse-text">errestrial</span></span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="collapse-text">N</span><span class="estel-letter">e</span><span class="collapse-text">tworks</span></span><span class="collapse-space"> </span><span class="collapse-text">for</span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="collapse-text">Inte</span><span class="estel-letter">l</span><span class="collapse-text">ligence</span></span></p><p id="lab-slogan">Wind drives the soar; Intellect weaves the sky.</p></div>
+<div id="title-area" style="height: 148px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; user-select: none;"><p id="lab-title"><span style="white-space:nowrap"><span class="estel-letter">E</span><span class="collapse-text">xploring</span></span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="estel-letter case-swap"><span class="glyph-upper">S</span><span class="glyph-lower">s</span></span><span class="collapse-text">ecure</span></span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="collapse-text">Sky-</span><span class="estel-letter case-swap kern-right"><span class="glyph-upper">T</span><span class="glyph-lower">t</span></span><span class="collapse-text">errestrial</span></span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="collapse-text">N</span><span class="estel-letter">e</span><span class="collapse-text">tworks</span></span><span class="collapse-space"> </span><span class="collapse-text">for</span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="collapse-text">Inte</span><span class="estel-letter">l</span><span class="collapse-text">ligence</span></span></p><p id="lab-slogan">Wind drives the soar; Intellect weaves the sky.</p></div>
 <style>
 .collapse-text, .collapse-space {
   display: inline-block;
@@ -160,7 +189,9 @@ fetch('sidebar.html')
   // above shrank the title past its CSS size.
   var slogan = document.getElementById('lab-slogan');
   var titleSize = parseFloat(window.getComputedStyle(titleP).fontSize);
-  slogan.style.fontSize = Math.max(12, Math.round(titleSize * 0.46)) + 'px';
+  // Trailing bump is +5pt over the proportional size (3pt, then 2pt more).
+  // 1pt = 4/3px, so 5pt = 20/3px; round so the result lands on a whole pixel.
+  slogan.style.fontSize = Math.round(Math.max(12, Math.round(titleSize * 0.46)) + 20 / 3) + 'px';
 
   var sloganTimer = null;
   // Held back until the name has finished glitching in, so the two don't
