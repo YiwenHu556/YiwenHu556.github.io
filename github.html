@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link rel="stylesheet" href="assets/mysite.css" type="text/css" />
 <link rel="icon" type="image/png" href="assets/favicon.png?v=2" />
-<title>E-WiNS Lab - GitHub</title>
+<title>Estel Lab - GitHub</title>
 <style>
 .gh-profile {
   text-align: center;
@@ -108,7 +108,7 @@ fetch('sidebar.html')
 </td>
 <td id="layout-content">
 <div id="toptitle">
-<h1>E-WiNS Lab on GitHub</h1>
+<h1>Estel Lab on GitHub</h1>
 </div>
 
 <!-- Profile section -->
@@ -123,21 +123,34 @@ fetch('sidebar.html')
 
 <script>
 (function() {
-  var username = 'ewinslab';
+  // GitHub account handle. Renamed from 'ewinslab' during the rebrand. GitHub
+  // redirects the old web URL but the REST API returns 404 for it, so this has
+  // to track the current handle or the repo list silently empties.
+  var username = 'Estel-at-UMBC';
+  // What the page shows. Kept independent of the account so the site's wording
+  // stays under our control no matter what the profile reports.
+  var labName = 'Estel Lab';
+  var labBio = 'Exploring Secure Sky-Terrestrial Networks for Intelligence @ UMBC';
+
+  function profileHtml(user) {
+    var html = '';
+    if (user && user.avatar_url) {
+      html += '<img src="' + user.avatar_url + '" alt="' + labName + '" />';
+    }
+    html += '<p class="gh-name">' + labName + '</p>';
+    html += '<p class="gh-bio">' + labBio + '</p>';
+    html += '<a class="gh-btn" href="https://github.com/' + username + '" target="_blank">Visit on GitHub</a>';
+    return html;
+  }
 
   // Fetch profile
   fetch('https://api.github.com/users/' + username)
     .then(function(r) { return r.json(); })
     .then(function(user) {
-      var html = '';
-      html += '<img src="' + user.avatar_url + '" alt="' + user.login + '" />';
-      html += '<p class="gh-name">' + (user.name || user.login) + '</p>';
-      html += '<p class="gh-bio">' + (user.bio || 'Emerging Wireless Networks and Security Lab @ UMBC') + '</p>';
-      html += '<a class="gh-btn" href="https://github.com/' + username + '" target="_blank">Visit on GitHub</a>';
-      document.getElementById('gh-profile').innerHTML = html;
+      document.getElementById('gh-profile').innerHTML = profileHtml(user);
     })
     .catch(function() {
-      document.getElementById('gh-profile').innerHTML = '<p class="gh-name">E-WiNS Lab</p><p class="gh-bio">Emerging Wireless Networks and Security Lab @ UMBC</p><a class="gh-btn" href="https://github.com/' + username + '" target="_blank">Visit on GitHub</a>';
+      document.getElementById('gh-profile').innerHTML = profileHtml(null);
     });
 
   // Extra repos to include alongside the synced account repos.
@@ -187,7 +200,12 @@ fetch('sidebar.html')
         if (repo.fork) return;
         var updated = new Date(repo.updated_at).toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'});
         html += '<div class="gh-repo-card">';
-        html += '<p class="repo-name"><a href="' + repo.html_url + '" target="_blank">' + repo.full_name + '</a></p>';
+        // Our own repos show the bare name: the owner prefix is redundant on this
+        // page and still carries the old lab handle. Repos owned by someone else
+        // keep the full owner/name so the source stays clear.
+        var owner = repo.owner && repo.owner.login;
+        var label = (owner && owner.toLowerCase() === username.toLowerCase()) ? repo.name : repo.full_name;
+        html += '<p class="repo-name"><a href="' + repo.html_url + '" target="_blank">' + label + '</a></p>';
         html += '<p class="repo-desc">' + (repo.description || 'No description') + '</p>';
         html += '<p class="repo-meta">';
         if (repo.language) html += '<span>' + repo.language + '</span>';
@@ -206,7 +224,7 @@ fetch('sidebar.html')
 
 <div id="footer">
 <div id="footer-text">
-Page modified 2026-03-30, by Yiwen Hu</a>.
+Page modified 2026-07-26, by Yiwen Hu</a>.
 </div>
 </div>
 </td>
