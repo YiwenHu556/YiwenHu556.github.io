@@ -142,21 +142,24 @@ fetch('sidebar.html')
 <div id="title-area" style="height: 148px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; user-select: none;">
   <style>
     #lab-title {
-      transition: transform 1.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+      
+      transition: transform 1.8s cubic-bezier(0.25, 0.1, 0.25, 1), letter-spacing 1.8s cubic-bezier(0.25, 0.1, 0.25, 1);
       transform-origin: center center;
     }
+
     
     #lab-title:has(.collapsed) {
       transform: scale(1.35);
+      letter-spacing: 0.08em;
     }
     #lab-title:has(.collapsed) .cap-s {
       text-transform: lowercase;
     }
   </style>
-
+  
   <p id="lab-title"><span style="white-space:nowrap">E<span class="collapse-text">xploring</span></span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="cap-s">S</span><span class="collapse-text">ecure</span></span><span class="collapse-space"> </span><span class="collapse-text">and</span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="collapse-text">In</span>t<span class="collapse-text">elligent</span></span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="collapse-text">Sky-T</span>e<span class="collapse-text">rrestria</span>l</span><span class="collapse-space"> </span><span style="white-space:nowrap"><span class="collapse-text">Networks</span></span></p>
 
-  <p id="lab-slogan" style="color: #C6A300;">Wind drives the soar; Intellect weaves the sky.</p>
+  <p id="lab-slogan" style="color: #C6A300;">Wind drives the soar&nbsp;&nbsp;&nbsp;&nbsp;Intellect weaves the sky</p>
 </div>
 <style>
 .collapse-text, .collapse-space {
