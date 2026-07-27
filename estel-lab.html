@@ -141,6 +141,14 @@ fetch('sidebar.html')
 
 <div id="title-area" style="height: 148px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; user-select: none;">
   <style>
+    #lab-title {
+      transition: transform 1.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transform-origin: center center;
+    }
+    
+    #lab-title:has(.collapsed) {
+      transform: scale(1.35);
+    }
     #lab-title:has(.collapsed) .cap-s {
       text-transform: lowercase;
     }
